@@ -1,0 +1,42 @@
+{{set . "title" "Login"}}
+{{template "header.html" .}}
+
+<div class="row">
+    <div class="span6 offset3">
+        {{if .flash.error }}
+            <div class="alert alert-error">
+                {{.flash.error}}
+            </div>
+        {{end}}
+        <br />
+        <form class="form-horizontal" method="post" action="{{url "Sessions.Create"}}" accept-charset="utf-8">
+            <div class="control-group">
+             {{with $field := field "loginform.Name" .}}
+                <label class="control-label" for="inputName">Name</label>
+                <div class="controls">
+                    <input type="text" id="inputName" placeholder="Name" name="{{$field.Name}}" value="{{$field.Flash}}">
+                    * <span class="error">{{$field.Error}}</span>
+                </div>
+              {{end}}
+            </div>
+            <div class="control-group">
+            <div class="control-group">
+             {{with $field := field "loginform.Password" .}}
+                <label class="control-label" for="inputPassword">Password</label>
+                <div class="controls">
+                    <input type="password" id="inputPassword" placeholder="Password" name="{{$field.Name}}" value="{{$field.Flash}}">
+                    * <span class="error">{{$field.Error}}</span>
+              {{end}}
+                </div>
+            </div>
+                <div class="controls">
+                    <label class="checkbox">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <button type="submit" class="btn">Sign in</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{{template "footer.html" .}}
