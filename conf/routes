@@ -5,7 +5,7 @@
 GET     /                                       Application.Index
 GET     /sessions/new                           Sessions.New
 POST    /sessions/create                        Sessions.Create
-POST    /sessions/destroy                       Sessions.Destroy
+get     /sessions/destroy                       Sessions.Destroy
 GET     /user/sign_up                           Users.New
 POST    /user/sign_up                           Users.Create
 

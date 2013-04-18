@@ -8,7 +8,7 @@ import (
 )
 
 type Users struct {
-	*revel.Controller
+	*Application
 }
 
 func (c Users) New() revel.Result {

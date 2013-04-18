@@ -13,8 +13,13 @@
                     <li><a href="/rooms">Room</a></li>
                 </ul>
                 <ul class="nav pull-right">
-                    <li class=""><a href="/sessions/new">signin</a></li>
-                    <li class=""><a href="/user/sign_up">signup</a></li>
+                    {{if .user}}
+                        <li class=""><a href="/">{{.user.Name}}</a></li>
+                        <li class=""><a href="{{url "Sessions.Destroy"}}">logout</a></li>
+                    {{else}}
+                        <li class=""><a href="/sessions/new">signin</a></li>
+                        <li class=""><a href="/user/sign_up">signup</a></li>
+                    {{end}}
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

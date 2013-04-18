@@ -21,6 +21,7 @@ func (userform  *UserForm) Validate(v *revel.Validation) {
 
 type UserLogin struct {
     Name, Password  string
+    Remember bool
 }
 
 func (loginform *UserLogin) Validate(v *revel.Validation) {

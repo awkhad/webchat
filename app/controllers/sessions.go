@@ -8,10 +8,11 @@ import (
 )
 
 type Sessions struct {
-	*revel.Controller
+	*Application
 }
 
 func (c Sessions) New() revel.Result {
+    //fmt.Println(c.Session["user_name"])
 	return c.Render()
 }
 
@@ -24,17 +25,21 @@ func (c Sessions) Create(loginform *form.UserLogin) revel.Result {
         return c.Redirect(Sessions.New)
     }
 
-    //fmt.Println(loginform)
     if !model.Authenticate(loginform.Name, loginform.Password){
         c.Flash.Error("username or password error")
         return c.Redirect(Sessions.New)
     }
 
     //create session
-    c.Session["user_name"] = "lidashuang"
+    c.Session["user_name"] = loginform.Name
+    c.Flash.Success("Login success")
     return c.Redirect(Application.Index)
 }
 
 func (c Sessions) Destroy() revel.Result {
-	return c.Render()
+    for k := range c.Session {
+        delete(c.Session, k)
+    }
+
+    return c.Redirect(Application.Index)
 }

@@ -15,7 +15,7 @@
                 <label class="control-label" for="inputName">Name</label>
                 <div class="controls">
                     <input type="text" id="inputName" placeholder="Name" name="{{$field.Name}}" value="{{$field.Flash}}">
-                    * <span class="error">{{$field.Error}}</span>
+                    <span class="error">{{$field.Error}}</span>
                 </div>
               {{end}}
             </div>
@@ -25,14 +25,16 @@
                 <label class="control-label" for="inputPassword">Password</label>
                 <div class="controls">
                     <input type="password" id="inputPassword" placeholder="Password" name="{{$field.Name}}" value="{{$field.Flash}}">
-                    * <span class="error">{{$field.Error}}</span>
+                    <span class="error">{{$field.Error}}</span>
               {{end}}
                 </div>
             </div>
                 <div class="controls">
+                {{with $field := field "loginform.Remember" .}}
                     <label class="checkbox">
-                        <input type="checkbox"> Remember me
+                        <input type="checkbox" name="{{$field.Name}}"> Remember me
                     </label>
+                 {{end}}
                     <button type="submit" class="btn">Sign in</button>
                 </div>
             </div>

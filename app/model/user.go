@@ -33,31 +33,43 @@ func NewUser(form *form.UserForm) (user *User){
     return user
 }
 
-func (user *User) ValidatesUniqueness() bool{
+func (user *User) ValidatesUniqueness() error {
     db := GetDblink()
     var u User
-    err := db.Where("name=? or email=?", user.Name, user.Email).Find(&u)
-    // exist item 
-    if err == nil {
-        return false
+    //err := db.Where("name=? or email=?", user.Name, user.Email).Find(&u)
+    if err := db.Where("name=?", user.Name).Find(&u); err == nil {
+        return errors.New("input name: " + user.Name + " has exist")
     }
 
-    return true
+    if err := db.Where("email=?", user.Email).Find(&u); err == nil {
+        return errors.New("input email: " + user.Email+ " has exist")
+    }
+
+    return nil
 }
 
 func (user *User) Save() error {
     db := GetDblink()
 
-    if !user.ValidatesUniqueness()  {
-        return errors.New("user name or email is exist")
-    }
-
-    err := db.Save(user)
-
-    if err != nil {
+    if err := user.ValidatesUniqueness(); err != nil   {
         return err
     }
+
+    if err := db.Save(user); err != nil {
+        return err
+    }
+
     return nil
+}
+
+func FindUserByName(name string) (*User) {
+    db := GetDblink()
+    user := new(User)
+
+    if err := db.Where("name=?", name).Find(user); err != nil {
+        panic(err)
+    }
+    return user
 }
 
 // auth user

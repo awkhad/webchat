@@ -3,5 +3,18 @@
 
 <h1>Your Application Is Ready</h1>
 
+error:
+{{if .flash.error }}
+    <div class="alert alert-error">
+        {{.flash.error}}
+    </div>
+{{end}}
+
+{{if .flash.success }}
+    <div class="alert alert-success">
+        {{.flash.success}}
+    </div>
+{{end}}
+
 {{template "footer.html" .}}
 
