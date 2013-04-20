@@ -10,6 +10,7 @@ GET     /user/sign_up                           Users.New
 POST    /user/sign_up                           Users.Create
 
 GET     /rooms                                  Rooms.Index
+GET     /rooms/new                              Rooms.New
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

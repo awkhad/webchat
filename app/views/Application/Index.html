@@ -1,9 +1,8 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<h1>Your Application Is Ready</h1>
+<h1>Application Is Ready</h1>
 
-error:
 {{if .flash.error }}
     <div class="alert alert-error">
         {{.flash.error}}
