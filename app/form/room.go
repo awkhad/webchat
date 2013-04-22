@@ -4,12 +4,16 @@ import (
     "github.com/robfig/revel"
 )
 
-type roomForm struct {
-    Name string
+type RoomForm struct {
+    UserId int
+    RoomKey string
+    Title string
     Desc string
 }
 
-func (rf *roomForm) Validation(v *revel.Validation) {
-    v.Required(rf.Name)
+func (rf *RoomForm) Validate(v *revel.Validation) {
+    v.Required(rf.UserId)
+    v.Required(rf.RoomKey)
+    v.Required(rf.Title)
     v.Required(rf.Desc)
 }

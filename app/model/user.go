@@ -11,10 +11,10 @@ import (
 )
 
 type User struct {
-    Id int `pk`
-    Name string
-    Email string 
-    Salt string 
+    Id      int `pk`
+    Name    string
+    Email   string 
+    Salt    string 
     Encryptpasswd string
     Created time.Time
     Updated time.Time
@@ -36,7 +36,7 @@ func NewUser(form *form.UserForm) (user *User){
 func (user *User) ValidatesUniqueness() error {
     db := GetDblink()
     var u User
-    //err := db.Where("name=? or email=?", user.Name, user.Email).Find(&u)
+
     if err := db.Where("name=?", user.Name).Find(&u); err == nil {
         return errors.New("input name: " + user.Name + " has exist")
     }

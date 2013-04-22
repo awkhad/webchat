@@ -28,6 +28,13 @@ namespace :db do
     connected_db(ENVIRONMENT)
     ActiveRecord::Base.connection.drop_database CONFIG[ENVIRONMENT]["database"]
   end
+
+  desc "rollback"
+  task :rollback do
+    connected_db(ENVIRONMENT)
+    step = 1
+    ActiveRecord::Migrator.rollback("./db/migrate", step)
+  end
 end
 
 def connected_db(env)
