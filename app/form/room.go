@@ -9,6 +9,7 @@ type RoomForm struct {
     RoomKey string
     Title string
     Desc string
+    Private bool
 }
 
 func (rf *RoomForm) Validate(v *revel.Validation) {

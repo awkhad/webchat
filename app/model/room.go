@@ -13,9 +13,17 @@ type Room struct {
     UserId  int 
     RoomKey string
     Title   string 
-    Desc    string 
+    Private bool
+    Description string 
     CreatedAt time.Time
     UpdatedAt time.Time
+}
+
+func AllRoom() []Room{
+    var rooms []Room
+    db := GetDblink()
+    db.FindAll(&rooms)
+    return rooms
 }
 
 func NewRoom(form *form.RoomForm) (room *Room) {
@@ -23,7 +31,8 @@ func NewRoom(form *form.RoomForm) (room *Room) {
         UserId: form.UserId,
         RoomKey: form.RoomKey,
         Title: form.Title,
-        Desc: form.Desc,
+        Private: form.Private,
+        Description: form.Desc,
         CreatedAt: time.Now(),
         UpdatedAt: time.Now(),
     }
@@ -34,11 +43,11 @@ func (room *Room) Save() ( *Room, error){
     db := GetDblink()
 
     if err := room.ValidatesUniqueness(); err != nil {
-        return nil,err
+        return nil, err
     }
 
     if err := db.Save(room); err != nil {
-        return nil,err
+        return nil, err
     }
 
     return room, nil
@@ -47,7 +56,7 @@ func (room *Room) Save() ( *Room, error){
 func (room *Room) ValidatesUniqueness() error {
     db := GetDblink()
     var r Room
-    if err := db.Where("roomid=?", room.RoomKey).Find(&r); err == nil {
+    if err := db.Where("room_key=?", room.RoomKey).Find(&r); err == nil {
         return errors.New("input room id: " + room.RoomKey+ " has exist")
     }
     return nil

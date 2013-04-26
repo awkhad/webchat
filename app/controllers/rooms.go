@@ -5,7 +5,7 @@ import (
     "github.com/robfig/revel"
     "webchat/app/form"
     "webchat/app/model"
-    //"fmt"
+    "fmt"
 )
 
 
@@ -14,7 +14,9 @@ type Rooms struct {
 }
 
 func (c Rooms) Index() revel.Result {
-	return c.Render()
+    rooms := model.AllRoom()
+    fmt.Println(rooms)
+    return c.Render(rooms)
 }
 
 func (c Rooms) New() revel.Result {
@@ -50,7 +52,7 @@ func (c Rooms) Create(rf *form.RoomForm) revel.Result {
         return c.Redirect(Rooms.New)
     }
 
-    return c.Redirect("/rooms/%s/show", room.RoomKey)
+    return c.Redirect("/r/%s", room.RoomKey)
 }
 
 func (c Rooms) Show(roomkey string) revel.Result{

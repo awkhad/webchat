@@ -1,3 +1,18 @@
 {{template "header.html" .}}
-<h1>room index</h1>
+<div class="row">
+    {{range .rooms}}
+    <div class="span3" id="room-{{.Id}}">
+        <div class="room">
+            <div class="room-header">
+                <a href="/r/{{.RoomKey}}">{{.Title}} {{if eq .Private true}}<i class="icon-lock"></i> {{end}} </a>
+            </div>
+            <div class="room-body">
+                {{.Description}}
+            </div>
+            <div class="room-footer">
+            </div>
+        </div>
+    </div>
+    {{end}} 
+</div>
 {{template "footer.html" .}}

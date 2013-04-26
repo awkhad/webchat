@@ -2,3 +2,20 @@
     color: red;
 }
 
+body{
+    /*background-color: #E0E0E0;*/
+}
+
+.room {
+    height: 150px;
+    margin-bottom: 20px;
+    border: 1px solid #DDD;
+    background-color: #fff;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid #e2e2e9;
+    padding: 10px;
+}
+

@@ -38,6 +38,11 @@
             </div>
             <div class="control-group">
                 <div class="controls">
+                {{with $field := field "rf.Private" .}}
+                    <label class="checkbox">
+                        <input type="checkbox" name="{{$field.Name}}"> Private?
+                    </label>
+                 {{end}}
                     <button type="submit" class="btn">Create Room</button>
                 </div>
             </div>
