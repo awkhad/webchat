@@ -19,3 +19,6 @@ body{
     padding: 10px;
 }
 
+.pagination .next {
+    float: right;
+}

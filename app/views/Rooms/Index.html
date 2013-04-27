@@ -4,7 +4,7 @@
     <div class="span3" id="room-{{.Id}}">
         <div class="room">
             <div class="room-header">
-                <a href="/r/{{.RoomKey}}">{{.Title}} {{if eq .Private true}}<i class="icon-lock"></i> {{end}} </a>
+                <a href="/r/{{.RoomKey}}">{{.Id}} | {{.Title}} {{if eq .Private true}}<i class="icon-lock"></i> {{end}} </a>
             </div>
             <div class="room-body">
                 {{.Description}}
@@ -14,5 +14,24 @@
         </div>
     </div>
     {{end}} 
+</div>
+
+<div class="pagination">
+    <ul class="prev">
+        {{if eq .p 1 }} 
+            <li class="prev disabled"> <a href="#">← prev</a></li>
+        {{else}}
+            <li class="prev "> <a href="/rooms?p={{minus .p 1}}">← prev</a></li>
+        {{end}}
+
+    </ul>
+
+    <ul class="next">
+        {{if less .p .allPage }}
+            <li class="next"><a rel="next" href="/rooms?p={{add .p 1}}">next →</a></li>
+        {{else}}
+            <li class="disabled"><a rel="next" href="#">next →</a></li>
+        {{end}}
+    </ul>
 </div>
 {{template "footer.html" .}}

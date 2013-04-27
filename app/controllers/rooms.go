@@ -13,10 +13,14 @@ type Rooms struct {
     *Application
 }
 
-func (c Rooms) Index() revel.Result {
-    rooms := model.AllRoom()
-    fmt.Println(rooms)
-    return c.Render(rooms)
+func (c Rooms) Index(p int) revel.Result {
+    fmt.Println("p is:", p)
+    if p == 0 {
+        p = 1
+    }
+    rooms := model.FindOnePage(p)
+    allPage := (model.RoomCount() + model.PageSize - 1) / model.PageSize
+    return c.Render(rooms, p, allPage)
 }
 
 func (c Rooms) New() revel.Result {

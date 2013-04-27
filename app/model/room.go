@@ -4,9 +4,15 @@ import (
     //"github.com/robfig/revel"
     "time"
     "webchat/app/form"
-    //"fmt"
+    "fmt"
     "errors"
+    //"reflect"
 )
+
+const (
+    PageSize int = 12
+)
+
 
 type Room struct {
     Id      int `pk`
@@ -19,10 +25,38 @@ type Room struct {
     UpdatedAt time.Time
 }
 
-func AllRoom() []Room{
+func AllRoom() []Room {
     var rooms []Room
     db := GetDblink()
     db.FindAll(&rooms)
+    return rooms
+}
+
+func RoomCount() int {
+    db := GetDblink()
+    var itemCount int
+
+    err := db.Db.QueryRow("select count(*) as count from room"). Scan(&itemCount)
+
+    if err != nil {
+        panic(err)
+    }
+
+    fmt.Println("itemCount is :", itemCount)
+    return itemCount
+}
+
+func  FindOnePage(p int) []Room {
+    var rooms []Room
+    db := GetDblink()
+    var offset int 
+    if p == 0 {
+        offset = 0
+    } else {
+        offset = (p - 1) * PageSize 
+    }
+    //fmt.Println(p)
+    db.Limit(PageSize, offset).FindAll(&rooms)
     return rooms
 }
 
