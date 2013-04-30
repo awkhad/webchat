@@ -19,6 +19,56 @@ body{
     padding: 10px;
 }
 
+.chat-main, .chat-sidebar {
+    height: auto;
+    border: 1px solid #DDD;
+    background-color: #fff;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid #e2e2e9;
+    padding: 10px;
+}
+
+.chat-sidebar {
+    position: fixed;
+    right: 20px;
+}
+
+.chat-main {
+    height: 900px;
+}
+
+
+.chat-area {
+    height: 80px;
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #DDD;
+    background-color: #fff;
+    border-bottom: 2px solid #e2e2e9;
+    padding: 10px;
+}
+
+.avatar {
+    float: left;
+    width: 80px;
+}
+
+.chat-form {
+    float: left;
+}
+
+.chat-form textarea {
+    width: 500px;
+}
+
+.chat-help {
+    margin-left: 30px;
+    float: right;
+}
+
 .pagination .next {
     float: right;
 }

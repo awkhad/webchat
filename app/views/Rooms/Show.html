@@ -1,1 +1,39 @@
-{{.roomkey}}
+{{set . "title" "chating"}}
+{{template "header.html" .}}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span9 chat-main">
+            <div class="">
+                {{.roomkey}}
+            </div>
+        </div>
+        <div class="span3 chat-sidebar">
+            <h2>
+                <span class="room-title"> chatting </span>
+                <span class="room-star"> <i class="icon-star"></i> </span>
+            </h1>
+            <div class="room-info well">
+                欢迎前来扯蛋！ 工作之余，扯扯蛋也是不错的选择哦
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="chat-area navbar-fixed-bottom">
+                <div class="avatar">
+                    <img src="http://www.gravatar.com/avatar/2b7ee16fdd2c0af957187da43715fa93?s=64&d=identicon&r=PG" alt="" />
+                </div>
+                <div class="chat-form">
+                    <textarea rows="3"></textarea>
+                    <button class="btn btn-mini" id="sayit-button" >send</button>
+                </div>
+                <div class="chat-help">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{template "footer.html" .}}

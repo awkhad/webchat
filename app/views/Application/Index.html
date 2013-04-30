@@ -1,19 +1,21 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<h1>Application Is Ready</h1>
+<div class="container">
+    <h1>Application Is Ready</h1>
 
-{{if .flash.error }}
+    {{if .flash.error }}
     <div class="alert alert-error">
         {{.flash.error}}
     </div>
-{{end}}
+    {{end}}
 
-{{if .flash.success }}
+    {{if .flash.success }}
     <div class="alert alert-success">
         {{.flash.success}}
     </div>
-{{end}}
+    {{end}}
+</div>
 
 {{template "footer.html" .}}
 

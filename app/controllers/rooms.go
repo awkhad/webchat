@@ -60,5 +60,9 @@ func (c Rooms) Create(rf *form.RoomForm) revel.Result {
 }
 
 func (c Rooms) Show(roomkey string) revel.Result{
+    if !c.isLogin() {
+        c.Flash.Error("Please login first")
+        return c.Redirect(Application.Index)
+    }
     return c.Render(roomkey)
 }
