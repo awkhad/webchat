@@ -12,6 +12,7 @@ POST    /user/sign_up                           Users.Create
 GET     /rooms                                  Rooms.Index
 GET     /rooms/new                              Rooms.New
 GET     /r/{roomkey}                            Rooms.Show
+WS      /r/{roomkey}/chatting                   Websocket.Chat
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

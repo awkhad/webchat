@@ -25,7 +25,7 @@ func (c Rooms) Index(p int) revel.Result {
 
 func (c Rooms) New() revel.Result {
 
-    if !c.isLogin() {
+    if isLogin(c.Controller) {
         c.Flash.Error("Please login first")
         return c.Redirect(Application.Index)
     }
@@ -35,7 +35,7 @@ func (c Rooms) New() revel.Result {
 
 func (c Rooms) Create(rf *form.RoomForm) revel.Result {
 
-    if !c.isLogin() {
+    if isLogin(c.Controller) {
         c.Flash.Error("Please login first")
         return c.Redirect(Application.Index)
     }
@@ -60,7 +60,7 @@ func (c Rooms) Create(rf *form.RoomForm) revel.Result {
 }
 
 func (c Rooms) Show(roomkey string) revel.Result{
-    if !c.isLogin() {
+    if !isLogin(c.Controller) {
         c.Flash.Error("Please login first")
         return c.Redirect(Application.Index)
     }
