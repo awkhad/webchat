@@ -2,9 +2,15 @@ package controllers
 
 import (
     "github.com/robfig/revel"
+    "webchat/app/chatserver"
+)
+
+var (
+    CharServer *chatserver.Server
 )
 
 func init(){
+    CharServer = chatserver.NewServer()
     //revel.InterceptMethod(Rooms.CheckUser, revel.BEFORE)
     revel.InterceptMethod(Application.AddUser, revel.BEFORE)
 

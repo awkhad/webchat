@@ -7,9 +7,6 @@ class CreateRoomTable < ActiveRecord::Migration
       t.string    :description
 
       t.timestamps
-      
-      #t.datetime  :created
-      #t.datetime  :updated
     end
   end
 end

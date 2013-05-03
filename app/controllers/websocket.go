@@ -3,6 +3,7 @@ package controllers
 import (
     "github.com/robfig/revel"
     "code.google.com/p/go.net/websocket"
+    "webchat/app/chatserver"
     "fmt"
 )
 
@@ -17,6 +18,16 @@ func (c Websocket) Chat(roomkey string, ws *websocket.Conn) revel.Result {
     }
 
     fmt.Println("the room key is:", roomkey)
+
+    for room := CharServer.Rooms.Front(); room != nil; room = room.Next() {
+        r := room.Value.(chatserver.Room)
+
+        if r.RoomKey == roomkey {
+            r.JoinUser(c.Session["user_name"])
+        }
+        //go room run 
+    }
+    
     return nil
 }
 

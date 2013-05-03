@@ -1,27 +1,44 @@
 $ ->
-  unless window.WebSocket
-    alert("you brower is not support websocket")
-    return
+  # new room
+  Room.checkWs()
+  window.room = new Room("ws://"+ window.location.host + window.location.pathname + "/chatting")
+  room.ws_conn.onopen = room.joinRoom()
 
-  room_addr = "ws://"+ window.location.host + window.location.pathname + "/chatting"
-  window.room = new Room(room_addr)
-  room.room_addr()
-  console.log room.connect()
-
-  #$('#sayit-button').click ->
-  #  text = $('textarea').val()
-  #  if text
-  #    alert(text)
-  #  else
-  #    alert("empty input")
-
+  # deal with message 
+  $('#sayit-button').click ->
+    text = $('#chat-form').val()
+    if text
+      alert(text)
+    else
+      return
 
 class Room
   constructor: (ws_url) ->
     @ws_url = ws_url
+    @ws_conn = new WebSocket(@ws_url)
 
-  room_addr: ->
+  @checkWs: ->
+    unless window.WebSocket
+      alert("you brower is not support websocket")
+      return
+
+  roomAddr: ->
     console.log @ws_url
+  
+  joinRoom: ->
+    message = new Message("join", "#{@currentUser()} has join room")
+    # send to server join message
 
-  connect: ->
-    w = new WebSocket(@ws_url)
+  currentUser: ->
+    $("#user-name").text()
+
+  sendMessage: (message) ->
+    # json 
+    # websocket send
+
+
+
+class Message
+  constructor: (type, text) ->
+    @type = type
+    @text = text

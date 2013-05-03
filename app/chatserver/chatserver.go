@@ -5,16 +5,37 @@ import (
     "fmt"
 )
 
-func init(){
-    server := &Server{
+type Server struct {
+    Name    string
+    Rooms   *list.List
+}
+
+type Room struct {
+    Id      int 
+    RoomKey string
+    Users   *list.List
+}
+
+type User struct {
+    Id int
+}
+
+type Event struct {
+    Type string
+    Text string
+}
+
+func NewServer() *Server {
+    Fx := &Server{
         Name: "webchat",
         Rooms: list.New(),
     }
-
-    fmt.Println("------server run...------ server name is", server.Name)
+    return Fx
 }
 
-type Server struct {
-    Name string
-    Rooms *list.List
+func (r Room)JoinUser(user string) {
+    fmt.Println("user is:", user)
 }
+
+
+
