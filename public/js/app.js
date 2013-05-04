@@ -7,11 +7,12 @@
     window.room = new Room("ws://" + window.location.host + window.location.pathname + "/chatting");
     room.ws_conn.onopen = room.joinRoom();
     return $('#sayit-button').click(function() {
-      var text;
+      var message, text;
 
       text = $('#chat-form').val();
       if (text) {
-        return alert(text);
+        message = new Message("text", text);
+        return room.sendMessage(message);
       } else {
 
       }
@@ -37,14 +38,21 @@
     Room.prototype.joinRoom = function() {
       var message;
 
-      return message = new Message("join", "" + (this.currentUser()) + " has join room");
+      message = new Message("join", "" + (this.currentUser()) + " has join room");
+      return console.log(JSON.stringify(message));
     };
 
     Room.prototype.currentUser = function() {
       return $("#user-name").text();
     };
 
-    Room.prototype.sendMessage = function(message) {};
+    Room.prototype.sendMessage = function(message) {
+      if (!this.ws_conn) {
+        return;
+      }
+      this.ws_conn.send(JSON.stringify(message));
+      return $('#chat-form').val('');
+    };
 
     return Room;
 

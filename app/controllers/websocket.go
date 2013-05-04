@@ -17,17 +17,13 @@ func (c Websocket) Chat(roomkey string, ws *websocket.Conn) revel.Result {
         return c.Redirect(Application.Index)
     }
 
-    fmt.Println("the room key is:", roomkey)
+    activeRoom := ChatServer.GetActiveRoom(roomkey)
+    onlineUser := chatserver.NewOnlineUser(c.Session["user_name"], ws, activeRoom)
+    activeRoom.JoinUser(onlineUser)
+    go onlineUser.PushToClient()
+    onlineUser.PullFromClient()
 
-    for room := CharServer.Rooms.Front(); room != nil; room = room.Next() {
-        r := room.Value.(chatserver.Room)
-
-        if r.RoomKey == roomkey {
-            r.JoinUser(c.Session["user_name"])
-        }
-        //go room run 
-    }
-    
+    fmt.Println("the room count is:", ChatServer.ActiveRooms.Len())
     return nil
 }
 

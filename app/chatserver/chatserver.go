@@ -1,24 +1,17 @@
 package chatserver 
 
 import (
+    //"code.google.com/p/go.net/websocket"
+    "webchat/app/model"
     "container/list" 
     "fmt"
 )
 
 type Server struct {
     Name    string
-    Rooms   *list.List
+    ActiveRooms *list.List
 }
 
-type Room struct {
-    Id      int 
-    RoomKey string
-    Users   *list.List
-}
-
-type User struct {
-    Id int
-}
 
 type Event struct {
     Type string
@@ -28,14 +21,39 @@ type Event struct {
 func NewServer() *Server {
     Fx := &Server{
         Name: "webchat",
-        Rooms: list.New(),
+        ActiveRooms: list.New(),
     }
     return Fx
 }
 
-func (r Room)JoinUser(user string) {
-    fmt.Println("user is:", user)
+// find avtive room return a activeroom instance
+
+func(s *Server) GetActiveRoom(roomkey string) *ActiveRoom {
+    var activeroom *ActiveRoom
+    for room := s.ActiveRooms.Front(); room != nil; room = room.Next() {
+        r := room.Value.(*ActiveRoom)
+        if r.RoomKey == roomkey {
+            activeroom = r
+        }
+    }
+
+    if activeroom == nil {
+        activeroom = NewActiveRoom(roomkey)
+        go activeroom.run()
+        s.ActiveRooms.PushBack(activeroom)
+    }
+
+    return activeroom
 }
 
+// init all room 
+func (s *Server) RunRooms() {
+    rooms := model.AllRoom()
 
-
+    for _, room := range rooms {
+        fmt.Println(room)
+        activeroom := NewActiveRoom(room.RoomKey)
+        go activeroom.run()
+        s.ActiveRooms.PushBack(activeroom)
+    }
+}

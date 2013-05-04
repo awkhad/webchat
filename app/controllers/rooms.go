@@ -66,5 +66,9 @@ func (c Rooms) Show(roomkey string) revel.Result{
     }
 
     room := model.FindRoomByRoomKey(roomkey)
-    return c.Render(room)
+
+    activeRoom := ChatServer.GetActiveRoom(roomkey)
+    users := activeRoom.UserList()
+
+    return c.Render(room, users)
 }

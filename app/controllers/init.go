@@ -6,11 +6,13 @@ import (
 )
 
 var (
-    CharServer *chatserver.Server
+    ChatServer *chatserver.Server
 )
 
 func init(){
-    CharServer = chatserver.NewServer()
+    ChatServer = chatserver.NewServer()
+    ChatServer.RunRooms()
+
     //revel.InterceptMethod(Rooms.CheckUser, revel.BEFORE)
     revel.InterceptMethod(Application.AddUser, revel.BEFORE)
 
