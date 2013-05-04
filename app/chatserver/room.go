@@ -34,7 +34,7 @@ func (r ActiveRoom) UserList() ([]*OnlineUser){
     return userList
 }
 
-func (r ActiveRoom) run() {
+func (r ActiveRoom) Run() {
     for{
         select { 
         case bc := <- r.Broadcast:

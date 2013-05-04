@@ -42,6 +42,7 @@ func (user *User) ValidatesUniqueness() error {
     }
 
     if err := db.Where("email=?", user.Email).Find(&u); err == nil {
+        fmt.Println(u)
         return errors.New("input email: " + user.Email+ " has exist")
     }
 

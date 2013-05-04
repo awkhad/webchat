@@ -39,7 +39,7 @@ func(s *Server) GetActiveRoom(roomkey string) *ActiveRoom {
 
     if activeroom == nil {
         activeroom = NewActiveRoom(roomkey)
-        go activeroom.run()
+        go activeroom.Run()
         s.ActiveRooms.PushBack(activeroom)
     }
 
@@ -53,7 +53,7 @@ func (s *Server) RunRooms() {
     for _, room := range rooms {
         fmt.Println(room)
         activeroom := NewActiveRoom(room.RoomKey)
-        go activeroom.run()
+        go activeroom.Run()
         s.ActiveRooms.PushBack(activeroom)
     }
 }

@@ -5,6 +5,7 @@ import (
     "github.com/robfig/revel"
     "webchat/app/form"
     "webchat/app/model"
+    "webchat/app/chatserver"
     "fmt"
 )
 
@@ -55,6 +56,12 @@ func (c Rooms) Create(rf *form.RoomForm) revel.Result {
         c.Flash.Error(err.Error())
         return c.Redirect(Rooms.New)
     }
+
+    // run activeroom
+    activeroom := chatserver.NewActiveRoom(room.RoomKey)
+    go activeroom.Run()
+    ChatServer.ActiveRooms.PushBack(activeroom)
+
 
     return c.Redirect("/r/%s", room.RoomKey)
 }
