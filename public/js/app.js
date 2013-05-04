@@ -6,6 +6,9 @@
     Room.checkWs();
     window.room = new Room("ws://" + window.location.host + window.location.pathname + "/chatting");
     room.ws_conn.onopen = room.joinRoom();
+    room.ws_conn.onmessage = function(e) {
+      return room.reveiveMessage(e);
+    };
     return $('#sayit-button').click(function() {
       var message, text;
 
@@ -52,6 +55,10 @@
       }
       this.ws_conn.send(JSON.stringify(message));
       return $('#chat-form').val('');
+    };
+
+    Room.prototype.reveiveMessage = function(e) {
+      return alert(e.data);
     };
 
     return Room;

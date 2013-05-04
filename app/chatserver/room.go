@@ -8,20 +8,28 @@ import (
 type ActiveRoom struct {
     RoomKey string
     Users   *list.List
-    Broadcast chan Event
+    Broadcast chan *Event
 }
 
 func NewActiveRoom(rk string) *ActiveRoom{
     activeRoom := &ActiveRoom{
         RoomKey: rk,
         Users: list.New(),
-        Broadcast: make(chan Event),
+        Broadcast: make(chan *Event),
     }
     return activeRoom
 }
 
 func (r ActiveRoom) JoinUser(user *OnlineUser) {
     r.Users.PushBack(user)
+    // send join message
+    event := &Event{
+        Type: "join",
+        Text: user.Info.Name + " has join room",
+        User: user.Info,
+    }
+
+    r.Broadcast <- event
 }
 
 func (r ActiveRoom) UserList() ([]*OnlineUser){

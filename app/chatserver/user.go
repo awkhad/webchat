@@ -2,28 +2,36 @@ package chatserver
 
 import (
     "code.google.com/p/go.net/websocket"
+    "webchat/app/model"
     //"container/list" 
     "fmt"
 )
 
 type OnlineUser struct {
-    Name string
+    Id int
     Connection   *websocket.Conn
-    Send chan Event 
+    Send chan *Event 
     Room *ActiveRoom
+    Info *UserInfo
 }
 
-//type UserInfo struct {
-//}
+type UserInfo struct {
+    Name string
+    Email string
+}
 
-func NewOnlineUser(name string, ws *websocket.Conn,room *ActiveRoom) *OnlineUser {
-    user := &OnlineUser{
-        Name: name, 
+func NewOnlineUser(user *model.User, ws *websocket.Conn,room *ActiveRoom) *OnlineUser {
+    onlineUser := &OnlineUser{
+        Id: user.Id, 
         Connection: ws,
-        Send: make(chan Event, 512),
+        Send: make(chan *Event, 512),
         Room: room,
+        Info: &UserInfo{
+            Name: user.Name,
+            Email: user.Email,
+        },
     }
-    return user
+    return onlineUser
 }
 
 func (u *OnlineUser) PushToClient(){
@@ -39,9 +47,6 @@ func (u *OnlineUser) PullFromClient(){
     for{
         var event Event
         err := websocket.JSON.Receive(u.Connection, &event)
-        //var event string
-        //var eventtest Event
-        //err := websocket.Message.Receive(u.Connection, &event)
         fmt.Println("the message is:", event)
 
         // user close
@@ -49,8 +54,7 @@ func (u *OnlineUser) PullFromClient(){
             fmt.Println("Receive occur some error")
             return
         }
-        u.Room.Broadcast <- event
-        //u.Room.Broadcast <- eventtest
+        u.Room.Broadcast <- &event
     }
 }
 

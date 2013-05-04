@@ -41,7 +41,7 @@ func (c Rooms) Create(rf *form.RoomForm) revel.Result {
         return c.Redirect(Application.Index)
     }
 
-    rf.UserId = c.CurrentUser().Id
+    rf.UserId = CurrentUser(c.Controller).Id
 
     rf.Validate(c.Validation)
 
@@ -74,8 +74,8 @@ func (c Rooms) Show(roomkey string) revel.Result{
 
     room := model.FindRoomByRoomKey(roomkey)
 
-    activeRoom := ChatServer.GetActiveRoom(roomkey)
-    users := activeRoom.UserList()
+    //activeRoom := ChatServer.GetActiveRoom(roomkey)
+    //users := activeRoom.UserList()
 
-    return c.Render(room, users)
+    return c.Render(room)
 }

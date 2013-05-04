@@ -3,6 +3,8 @@ $ ->
   Room.checkWs()
   window.room = new Room("ws://"+ window.location.host + window.location.pathname + "/chatting")
   room.ws_conn.onopen = room.joinRoom()
+  room.ws_conn.onmessage = (e) ->
+    room.reveiveMessage(e)
 
   # deal with message 
   $('#sayit-button').click ->
@@ -42,6 +44,8 @@ class Room
 
     # json 
     # websocket send
+  reveiveMessage: (e) ->
+    alert(e.data)
 
 class Message
   constructor: (type, text) ->

@@ -38,13 +38,13 @@ func (c Application) AddUser() revel.Result {
     return nil
 }
 
-func (c Application) CurrentUser() (user *model.User) {
+func CurrentUser(c *revel.Controller) (user *model.User) {
     if c.RenderArgs["user"] != nil {
 		user = c.RenderArgs["user"].(*model.User)
         return
 	}
 
-    if isLogin(c.Controller){
+    if isLogin(c){
         user = model.FindUserByName(c.Session["user_name"])
         return 
     }

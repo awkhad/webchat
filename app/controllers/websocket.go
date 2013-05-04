@@ -17,8 +17,9 @@ func (c Websocket) Chat(roomkey string, ws *websocket.Conn) revel.Result {
         return c.Redirect(Application.Index)
     }
 
+    user := CurrentUser(c.Controller)
     activeRoom := ChatServer.GetActiveRoom(roomkey)
-    onlineUser := chatserver.NewOnlineUser(c.Session["user_name"], ws, activeRoom)
+    onlineUser := chatserver.NewOnlineUser(user, ws, activeRoom)
     activeRoom.JoinUser(onlineUser)
     go onlineUser.PushToClient()
     onlineUser.PullFromClient()

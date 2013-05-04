@@ -12,10 +12,10 @@ type Server struct {
     ActiveRooms *list.List
 }
 
-
 type Event struct {
     Type string
     Text string
+    User *UserInfo
 }
 
 func NewServer() *Server {
@@ -27,7 +27,6 @@ func NewServer() *Server {
 }
 
 // find avtive room return a activeroom instance
-
 func(s *Server) GetActiveRoom(roomkey string) *ActiveRoom {
     var activeroom *ActiveRoom
     for room := s.ActiveRooms.Front(); room != nil; room = room.Next() {
