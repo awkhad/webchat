@@ -36,13 +36,14 @@ func NewUser(form *form.UserForm) (user *User){
 func (user *User) ValidatesUniqueness() error {
     db := GetDblink()
     var u User
+    db.Where("name=?", user.Name).Find(&u)
 
-    if err := db.Where("name=?", user.Name).Find(&u); err == nil {
+    if u.Id != 0 {
         return errors.New("input name: " + user.Name + " has exist")
     }
 
-    if err := db.Where("email=?", user.Email).Find(&u); err == nil {
-        fmt.Println(u)
+    db.Where("email=?", user.Email).Find(&u)
+    if u.Id != 0 {
         return errors.New("input email: " + user.Email+ " has exist")
     }
 

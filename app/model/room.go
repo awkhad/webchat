@@ -99,7 +99,8 @@ func (room *Room) Save() ( *Room, error){
 func (room *Room) ValidatesUniqueness() error {
     db := GetDblink()
     var r Room
-    if err := db.Where("room_key=?", room.RoomKey).Find(&r); err == nil {
+    db.Where("room_key=?", room.RoomKey).Find(&r)
+    if r.Id != 0 {
         return errors.New("input room id: " + room.RoomKey+ " has exist")
     }
     return nil
