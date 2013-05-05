@@ -52,6 +52,7 @@ func (s *Server) RunRooms() {
     for _, room := range rooms {
         fmt.Println(room)
         activeroom := NewActiveRoom(room.RoomKey)
+        // run room in a goroutine and push room to list
         go activeroom.Run()
         s.ActiveRooms.PushBack(activeroom)
     }

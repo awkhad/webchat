@@ -3,6 +3,7 @@ package chatserver
 import (
     //"code.google.com/p/go.net/websocket"
     "container/list" 
+    "fmt"
 )
 
 type ActiveRoom struct {
@@ -29,15 +30,17 @@ func (r ActiveRoom) JoinUser(user *OnlineUser) {
         User: user.Info,
     }
 
+    fmt.Println("the room len is:", r.Users.Len()) 
+
     r.Broadcast <- event
 }
 
-func (r ActiveRoom) UserList() ([]*OnlineUser){
-    var userList []*OnlineUser
+func (r ActiveRoom) UserList() ([]*UserInfo){
+    var userList []*UserInfo
 
     for u := r.Users.Front(); u != nil; u = u.Next() {
         user := u.Value.(*OnlineUser)
-        userList = append(userList, user)
+        userList = append(userList, user.Info)
     }
     return userList
 }

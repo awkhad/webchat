@@ -19,12 +19,15 @@ func (c Websocket) Chat(roomkey string, ws *websocket.Conn) revel.Result {
 
     user := CurrentUser(c.Controller)
     activeRoom := ChatServer.GetActiveRoom(roomkey)
+    // crate a user and add usr to room
     onlineUser := chatserver.NewOnlineUser(user, ws, activeRoom)
     activeRoom.JoinUser(onlineUser)
+    // 
     go onlineUser.PushToClient()
     onlineUser.PullFromClient()
 
     fmt.Println("the room count is:", ChatServer.ActiveRooms.Len())
+    defer onlineUser.Close()
     return nil
 }
 

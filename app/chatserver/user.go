@@ -58,3 +58,8 @@ func (u *OnlineUser) PullFromClient(){
     }
 }
 
+func (u *OnlineUser) Close(){
+    // clear resource when user conn close 
+    fmt.Println("the user conn is closed...")
+}
+
