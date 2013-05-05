@@ -61,5 +61,24 @@ func (u *OnlineUser) PullFromClient(){
 func (u *OnlineUser) Close(){
     // clear resource when user conn close 
     fmt.Println("the user conn is closed...")
+    // remove user form rooms 
+    for e := u.Room.Users.Front(); e != nil; e = e.Next() {
+        user := e.Value.(*OnlineUser)
+        if user.Id == u.Id {
+            u.Room.Users.Remove(e)
+            break
+        }
+    }
+
+    // close channel
+    close(u.Send)
+    // send levae message to other client
+    event := &Event{
+        Type: "leave",
+        Text: u.Info.Name + " has leave room",
+        User: u.Info,
+    }
+
+    u.Room.Broadcast <- event
 }
 
