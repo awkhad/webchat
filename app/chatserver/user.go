@@ -68,10 +68,10 @@ func (u *OnlineUser) Close() {
 			break
 		}
 	}
-    // close conn
-    if err := u.Connection.Close(); err != nil {
-        fmt.Println("close conn faild")
-    }
+	// close conn
+	if err := u.Connection.Close(); err != nil {
+		fmt.Println("close conn faild")
+	}
 
 	// close channel
 	close(u.Send)

@@ -27,7 +27,7 @@ func (c Websocket) Chat(roomkey string, ws *websocket.Conn) revel.Result {
 	onlineUser.PullFromClient()
 
 	fmt.Println("the room count is:", ChatServer.ActiveRooms.Len())
-    //defer close(onlineUser.Send)
+	//defer close(onlineUser.Send)
 	defer onlineUser.Close()
 
 	return nil
