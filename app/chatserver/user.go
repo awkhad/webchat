@@ -51,7 +51,7 @@ func (u *OnlineUser) PullFromClient() {
 
 		// user close
 		if err != nil {
-			fmt.Println("Receive occur some error")
+			fmt.Println("Receive occur some error", err.Error())
 			return
 		}
 		u.Room.Broadcast <- &event
@@ -60,18 +60,22 @@ func (u *OnlineUser) PullFromClient() {
 
 func (u *OnlineUser) Close() {
 	// clear resource when user conn close 
-	fmt.Println("the user conn is closed...")
 	// remove user form rooms's users list 
 	for e := u.Room.Users.Front(); e != nil; e = e.Next() {
 		user := e.Value.(*OnlineUser)
-		if user.Id == u.Id {
+		if user.Id == u.Id && user.Connection == u.Connection {
 			u.Room.Users.Remove(e)
 			break
 		}
 	}
+    // close conn
+    if err := u.Connection.Close(); err != nil {
+        fmt.Println("close conn faild")
+    }
 
 	// close channel
 	close(u.Send)
+
 	// send levae message to other client
 	event := &Event{
 		Type: "leave",
@@ -80,4 +84,5 @@ func (u *OnlineUser) Close() {
 	}
 
 	u.Room.Broadcast <- event
+
 }

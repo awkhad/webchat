@@ -6,13 +6,6 @@ import (
 	//"fmt"
 )
 
-//func (c Application) isLogin() bool {
-//    if _, ok := c.Session["user_name"]; ok {
-//        return true
-//    }
-//    return false
-//}
-
 func isLogin(c *revel.Controller) bool {
 	if _, ok := c.Session["user_name"]; ok {
 		return true
