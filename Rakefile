@@ -45,3 +45,8 @@ end
 #    YAML::load(File.open("conf/database.yml"))
 #end
 
+desc "gofmt"
+task :gofmt do
+  system 'find . -name "*.go" -exec gofmt -w {} \;'
+end
+

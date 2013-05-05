@@ -1,10 +1,10 @@
 package controllers
 
 import (
-    "github.com/robfig/revel"
-    "webchat/app/form"
-    "webchat/app/model"
-    //"fmt"
+	"github.com/robfig/revel"
+	"webchat/app/form"
+	"webchat/app/model"
+	//"fmt"
 )
 
 type Sessions struct {
@@ -12,34 +12,34 @@ type Sessions struct {
 }
 
 func (c Sessions) New() revel.Result {
-    //fmt.Println(c.Session["user_name"])
+	//fmt.Println(c.Session["user_name"])
 	return c.Render()
 }
 
 func (c Sessions) Create(loginform *form.UserLogin) revel.Result {
-    loginform.Validate(c.Validation)
+	loginform.Validate(c.Validation)
 
-    if c.Validation.HasErrors() {
-        c.Validation.Keep()
-        c.FlashParams()
-        return c.Redirect(Sessions.New)
-    }
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(Sessions.New)
+	}
 
-    if !model.Authenticate(loginform.Name, loginform.Password){
-        c.Flash.Error("username or password error")
-        return c.Redirect(Sessions.New)
-    }
+	if !model.Authenticate(loginform.Name, loginform.Password) {
+		c.Flash.Error("username or password error")
+		return c.Redirect(Sessions.New)
+	}
 
-    //create session
-    c.Session["user_name"] = loginform.Name
-    c.Flash.Success("Login success")
-    return c.Redirect(Application.Index)
+	//create session
+	c.Session["user_name"] = loginform.Name
+	c.Flash.Success("Login success")
+	return c.Redirect(Application.Index)
 }
 
 func (c Sessions) Destroy() revel.Result {
-    for k := range c.Session {
-        delete(c.Session, k)
-    }
+	for k := range c.Session {
+		delete(c.Session, k)
+	}
 
-    return c.Redirect(Application.Index)
+	return c.Redirect(Application.Index)
 }

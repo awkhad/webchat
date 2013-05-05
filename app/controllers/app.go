@@ -1,8 +1,8 @@
 package controllers
 
 import (
-    "github.com/robfig/revel"
-    //"fmt" 
+	"github.com/robfig/revel"
+	//"fmt" 
 )
 
 type Application struct {
@@ -12,4 +12,3 @@ type Application struct {
 func (c Application) Index() revel.Result {
 	return c.Render()
 }
-
