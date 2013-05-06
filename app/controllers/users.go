@@ -4,7 +4,7 @@ import (
 	"github.com/robfig/revel"
 	"webchat/app/form"
 	"webchat/app/model"
-	//"fmt"
+	"fmt"
 )
 
 type Users struct {
@@ -34,4 +34,22 @@ func (c Users) Create(userform *form.UserForm) revel.Result {
 	}
 
 	return c.Redirect(Application.Index)
+}
+
+func (c Users) EditSettings() revel.Result {
+    return c.Render()
+}
+
+func (c Users) SaveSettings() revel.Result {
+    return nil
+}
+
+func (c Users) MyRooms() revel.Result {
+    user := CurrentUser(c.Controller)
+
+    fmt.Println(user)
+
+    rooms := user.Rooms()
+
+    return c.Render(rooms)
 }

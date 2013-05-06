@@ -5,8 +5,13 @@
 GET     /                                       Application.Index
 GET     /sessions/new                           Sessions.New
 POST    /sessions/create                        Sessions.Create
-get     /sessions/destroy                       Sessions.Destroy
+GET     /sessions/destroy                       Sessions.Destroy
+
 GET     /user/sign_up                           Users.New
+GET     /user/edit/settings                     Users.EditSettings
+GET     /user/edit/settings                     Users.EditSettings
+GET     /user/myrooms                           Users.MyRooms
+POST    /user/save/settings                     Users.SaveSettings
 POST    /user/sign_up                           Users.Create
 
 GET     /rooms                                  Rooms.Index

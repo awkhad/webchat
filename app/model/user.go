@@ -104,3 +104,10 @@ func encryptPassword(password, salt string) string {
 	bs := fmt.Sprintf("%x", h.Sum(nil))
 	return bs
 }
+
+// get a user's rooms
+func (u *User) Rooms() []Room {
+    var rooms []Room
+    rooms = FindRoomByUserId(u.Id)
+    return rooms
+}
