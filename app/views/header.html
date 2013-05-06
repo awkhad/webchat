@@ -13,6 +13,16 @@
     <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/public/js/bootstrap-dropdown.js" type="text/javascript" charset="utf-8"></script>
     <!-- Le styles -->
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            $(".section").each(function(){
+                if (this.href == document.location.href) {
+                    this.parentElement.className = 'active';
+                }
+            });
+        });
+    </script>
+
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
