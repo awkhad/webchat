@@ -47,6 +47,7 @@ func (u *OnlineUser) PullFromClient() {
 	for {
 		var event Event
 		err := websocket.JSON.Receive(u.Connection, &event)
+        event.User = u.Info
 		fmt.Println("the message is:", event)
 
 		// user close
@@ -84,5 +85,4 @@ func (u *OnlineUser) Close() {
 	}
 
 	u.Room.Broadcast <- event
-
 }
