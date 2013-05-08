@@ -10,6 +10,7 @@ import (
 type Server struct {
 	Name        string
 	ActiveRooms *list.List
+	ActiveUsers *list.List
 }
 
 type Event struct {
@@ -22,6 +23,7 @@ func NewServer() *Server {
 	Fx := &Server{
 		Name:        "webchat",
 		ActiveRooms: list.New(),
+		ActiveUsers: list.New(),
 	}
 	return Fx
 }
@@ -56,4 +58,36 @@ func (s *Server) RunRooms() {
 		go activeroom.Run()
 		s.ActiveRooms.PushBack(activeroom)
 	}
+}
+
+func (s *Server) JoinUser(u *OnlineUser) {
+	s.ActiveUsers.PushBack(u)
+	fmt.Println("the server user list len is:", s.ActiveUsers.Len())
+}
+
+func (s *Server) RemoveUser(u *OnlineUser) {
+	// remove user from server users list
+	for e := s.ActiveUsers.Front(); e != nil; e = e.Next() {
+		user := e.Value.(*OnlineUser)
+		if user.Id == u.Id && user.Connection == u.Connection {
+			s.ActiveUsers.Remove(e)
+			break
+		}
+	}
+
+	fmt.Println("the server user list len is:", s.ActiveUsers.Len())
+}
+
+// get *OnlineUser by id
+func (s *Server) GetUserById(id int) *OnlineUser {
+	var onlineUser *OnlineUser
+
+	for e := s.ActiveUsers.Front(); e != nil; e = e.Next() {
+		user := e.Value.(*OnlineUser)
+		if user.Id == id {
+			onlineUser = user
+			break
+		}
+	}
+	return onlineUser
 }

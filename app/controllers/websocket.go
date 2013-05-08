@@ -12,23 +12,29 @@ type Websocket struct {
 }
 
 func (c Websocket) Chat(roomkey string, ws *websocket.Conn) revel.Result {
-	if !isLogin(c.Controller) {
-		c.Flash.Error("Please login first")
-		return c.Redirect(Application.Index)
-	}
+	// chech if user has login
+	//if !isLogin(c.Controller) {
+	//}
 
-	user := CurrentUser(c.Controller)
 	activeRoom := ChatServer.GetActiveRoom(roomkey)
 	// crate a user and add usr to room
+	user := CurrentUser(c.Controller)
 	onlineUser := chatserver.NewOnlineUser(user, ws, activeRoom)
+	defer onlineUser.Close()
+
+	// check if user has join room
+
 	activeRoom.JoinUser(onlineUser)
-	// 
+	defer activeRoom.RemoveUser(onlineUser)
+
+	ChatServer.JoinUser(onlineUser)
+	defer ChatServer.RemoveUser(onlineUser)
+
 	go onlineUser.PushToClient()
+
 	onlineUser.PullFromClient()
 
-	fmt.Println("the room count is:", ChatServer.ActiveRooms.Len())
-	//defer close(onlineUser.Send)
-	defer onlineUser.Close()
+	fmt.Println("websocket.go -the room count is:", ChatServer.ActiveRooms.Len())
 
 	return nil
 }

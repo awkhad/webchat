@@ -21,7 +21,17 @@ func NewActiveRoom(rk string) *ActiveRoom {
 	return activeRoom
 }
 
-func (r ActiveRoom) JoinUser(user *OnlineUser) {
+func (r *ActiveRoom) JoinUser(user *OnlineUser) {
+
+	// only one user in a room
+	for e := r.Users.Front(); e != nil; e = e.Next() {
+		u := e.Value.(*OnlineUser)
+		if user.Id == u.Id {
+			u.Connection.Close()
+			break
+		}
+	}
+
 	r.Users.PushBack(user)
 	// send join message
 	event := &Event{
@@ -35,7 +45,18 @@ func (r ActiveRoom) JoinUser(user *OnlineUser) {
 	r.Broadcast <- event
 }
 
-func (r ActiveRoom) UserList() []*UserInfo {
+func (r *ActiveRoom) RemoveUser(u *OnlineUser) {
+	// remove user form rooms's users list 
+	for e := r.Users.Front(); e != nil; e = e.Next() {
+		user := e.Value.(*OnlineUser)
+		if user.Id == u.Id && user.Connection == u.Connection {
+			r.Users.Remove(e)
+			break
+		}
+	}
+}
+
+func (r *ActiveRoom) UserList() []*UserInfo {
 	var userList []*UserInfo
 
 	for u := r.Users.Front(); u != nil; u = u.Next() {
@@ -45,7 +66,7 @@ func (r ActiveRoom) UserList() []*UserInfo {
 	return userList
 }
 
-func (r ActiveRoom) Run() {
+func (r *ActiveRoom) Run() {
 	for {
 		select {
 		case bc := <-r.Broadcast:

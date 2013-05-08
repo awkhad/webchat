@@ -1,10 +1,10 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/robfig/revel"
 	"webchat/app/form"
 	"webchat/app/model"
-	"fmt"
 )
 
 type Users struct {
@@ -37,19 +37,19 @@ func (c Users) Create(userform *form.UserForm) revel.Result {
 }
 
 func (c Users) EditSettings() revel.Result {
-    return c.Render()
+	return c.Render()
 }
 
 func (c Users) SaveSettings() revel.Result {
-    return nil
+	return nil
 }
 
 func (c Users) MyRooms() revel.Result {
-    user := CurrentUser(c.Controller)
+	user := CurrentUser(c.Controller)
 
-    fmt.Println(user)
+	fmt.Println(user)
 
-    rooms := user.Rooms()
+	rooms := user.Rooms()
 
-    return c.Render(rooms)
+	return c.Render(rooms)
 }

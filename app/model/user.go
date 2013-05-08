@@ -107,7 +107,7 @@ func encryptPassword(password, salt string) string {
 
 // get a user's rooms
 func (u *User) Rooms() []Room {
-    var rooms []Room
-    rooms = FindRoomByUserId(u.Id)
-    return rooms
+	var rooms []Room
+	rooms = FindRoomByUserId(u.Id)
+	return rooms
 }

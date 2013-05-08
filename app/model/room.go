@@ -44,14 +44,14 @@ func RoomCount() int {
 	return itemCount
 }
 
-func FindRoomByUserId(user_id int) []Room{
+func FindRoomByUserId(user_id int) []Room {
 	db := GetDblink()
-    var rooms []Room
-    fmt.Println("userid is--:", user_id)
+	var rooms []Room
+	fmt.Println("userid is--:", user_id)
 
-    db.Where("user_id=?", user_id).FindAll(&rooms)
-    fmt.Println("myrooms is --:", rooms)
-    return rooms
+	db.Where("user_id=?", user_id).FindAll(&rooms)
+	fmt.Println("myrooms is --:", rooms)
+	return rooms
 }
 
 func FindOnePage(p int) []Room {
