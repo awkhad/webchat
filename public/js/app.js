@@ -26,6 +26,7 @@
     function Room(ws_url) {
       this.ws_url = ws_url;
       this.ws_conn = new WebSocket(this.ws_url);
+      this.userlist = [];
     }
 
     Room.checkWs = function() {
@@ -41,8 +42,7 @@
     Room.prototype.joinRoom = function() {
       var message;
 
-      message = new Message("join", "" + (this.currentUser()) + " has join room");
-      return console.log(JSON.stringify(message));
+      return message = new Message("join", "" + (this.currentUser()) + " has join room");
     };
 
     Room.prototype.currentUser = function() {
@@ -58,7 +58,49 @@
     };
 
     Room.prototype.reveiveMessage = function(e) {
-      return alert(e.data);
+      var message;
+
+      message = $.parseJSON(e.data);
+      if (message.Type === "join") {
+        this.addUserToList(message.User);
+      }
+      if (message.Type === "leave") {
+        this.removeUserFromList(message.User);
+      }
+      return console.log(message);
+    };
+
+    Room.prototype.getUsersList = function() {
+      var url,
+        _this = this;
+
+      url = window.location.pathname + "/users.json";
+      $.getJSON(url, function(data) {
+        if (data.Users !== null) {
+          return _this.userlist = data.Users;
+        }
+      });
+      return this.userlist;
+    };
+
+    Room.prototype.addUserToList = function(user) {
+      var names;
+
+      names = [];
+      $("#userlist>ul>li").each(function() {
+        return names.push($(this).text());
+      });
+      if (names.indexOf(user.Name) === -1) {
+        return $("#userlist>ul").append($("<li>" + user.Name + "</li>"));
+      }
+    };
+
+    Room.prototype.removeUserFromList = function(user) {
+      return $("#userlist>ul>li").each(function() {
+        if ($(this).text() === user.Name) {
+          return $(this).remove();
+        }
+      });
     };
 
     return Room;

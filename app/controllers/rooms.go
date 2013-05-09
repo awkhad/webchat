@@ -16,6 +16,10 @@ type RoomApi struct {
 	*revel.Controller
 }
 
+type UserList struct {
+    Users []*chatserver.UserInfo
+}
+
 func (c Rooms) Index(p int) revel.Result {
 	fmt.Println("p is:", p)
 	if p == 0 {
@@ -75,18 +79,21 @@ func (c Rooms) Show(roomkey string) revel.Result {
 
 	room := model.FindRoomByRoomKey(roomkey)
 
-	//activeRoom := ChatServer.GetActiveRoom(roomkey)
-	//users := activeRoom.UserList()
+	activeRoom := ChatServer.GetActiveRoom(roomkey)
+	users := activeRoom.UserList()
 
-	return c.Render(room)
+	return c.Render(room, users)
 }
 
 func (c RoomApi) Users(roomkey string) revel.Result {
+
 	// get a activeRoom and get room's user list 
 	activeroom := ChatServer.GetActiveRoom(roomkey)
 	users := activeroom.UserList()
 
-	fmt.Println("the activeroom is:", activeroom.RoomKey)
+    userList := &UserList{
+        Users: users,
+    }
 
-	return c.RenderJson(users)
+	return c.RenderJson(userList)
 }

@@ -11,12 +11,16 @@
         <div class="span3 chat-sidebar">
             <h2>
                 <span class="room-title"> {{.room.Title}}</span>
-                <span class="room-star"> <i class="icon-star"></i> </span>
             </h1>
             <div class="room-info well">
                 {{.room.Description}}
             </div>
-            <div class="userlist">
+            <div class="userlist" id="userlist">
+                <ul>
+                    {{range .users}}
+                        <li>{{.Name}}</li>
+                    {{end}}
+                </ul>
             </div>
         </div>
     </div>
