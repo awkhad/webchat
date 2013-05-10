@@ -1,9 +1,9 @@
 package chatserver
 
 import (
-	//"code.google.com/p/go.net/websocket"
 	"container/list"
 	"fmt"
+	"time"
 )
 
 type ActiveRoom struct {
@@ -35,9 +35,10 @@ func (r *ActiveRoom) JoinUser(user *OnlineUser) {
 	r.Users.PushBack(user)
 	// send join message
 	event := &Event{
-		Type: "join",
-		Text: user.Info.Name + " has join room",
-		User: user.Info,
+		Type:    "join",
+		Text:    user.Info.Name + " has join room",
+		User:    user.Info,
+		Created: time.Now(),
 	}
 
 	fmt.Println("the room len is:", r.Users.Len())

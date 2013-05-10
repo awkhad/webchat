@@ -1,9 +1,9 @@
 package chatserver
 
 import (
-	//"code.google.com/p/go.net/websocket"
 	"container/list"
 	"fmt"
+	"time"
 	"webchat/app/model"
 )
 
@@ -14,9 +14,10 @@ type Server struct {
 }
 
 type Event struct {
-	Type string
-	Text string
-	User *UserInfo
+	Type    string
+	Text    string
+	Created time.Time
+	User    *UserInfo
 }
 
 func NewServer() *Server {

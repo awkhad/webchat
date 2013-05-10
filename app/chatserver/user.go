@@ -2,9 +2,9 @@ package chatserver
 
 import (
 	"code.google.com/p/go.net/websocket"
-	"webchat/app/model"
-	//"container/list" 
 	"fmt"
+	"time"
+	"webchat/app/model"
 )
 
 type OnlineUser struct {
@@ -47,6 +47,7 @@ func (u *OnlineUser) PullFromClient() {
 	for {
 		var event Event
 		err := websocket.JSON.Receive(u.Connection, &event)
+		event.Created = time.Now()
 		event.User = u.Info
 		fmt.Println("the message is:", event)
 
@@ -57,7 +58,16 @@ func (u *OnlineUser) PullFromClient() {
 		}
 
 		u.Room.Broadcast <- &event
+		u.SaveMessageToRedis(&event)
 	}
+}
+
+func (u *OnlineUser) SaveMessageToRedis(event *Event) {
+	//save to redis list 
+	// format: "text|lds|asd"  
+	listKey := "room:" + u.Room.RoomKey
+	content := event.Type + "|" + event.User.Name + "|" + event.Text
+	redisClient.Lpush(listKey, []byte(content))
 }
 
 func (u *OnlineUser) Close() {
@@ -72,9 +82,10 @@ func (u *OnlineUser) Close() {
 
 	// send levae message to other client
 	event := &Event{
-		Type: "leave",
-		Text: u.Info.Name + " has leave room",
-		User: u.Info,
+		Type:    "leave",
+		Text:    u.Info.Name + " has leave room",
+		User:    u.Info,
+		Created: time.Now(),
 	}
 
 	u.Room.Broadcast <- event

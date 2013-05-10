@@ -17,7 +17,7 @@ type RoomApi struct {
 }
 
 type UserList struct {
-    Users []*chatserver.UserInfo
+	Users []*chatserver.UserInfo
 }
 
 func (c Rooms) Index(p int) revel.Result {
@@ -91,9 +91,9 @@ func (c RoomApi) Users(roomkey string) revel.Result {
 	activeroom := ChatServer.GetActiveRoom(roomkey)
 	users := activeroom.UserList()
 
-    userList := &UserList{
-        Users: users,
-    }
+	userList := &UserList{
+		Users: users,
+	}
 
 	return c.RenderJson(userList)
 }
