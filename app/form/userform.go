@@ -21,11 +21,21 @@ func (userform *UserForm) Validate(v *revel.Validation) {
 }
 
 type UserLogin struct {
-	Name, Password string
-	Remember       bool
+	Name     string
+	Password string
+	Remember bool
 }
 
 func (loginform *UserLogin) Validate(v *revel.Validation) {
 	v.Required(loginform.Name)
 	v.Required(loginform.Password)
+}
+
+// users settings form
+type Settings struct {
+	Site         string
+	Weibo        string
+	Introduction string
+	Signature    string
+	Github       string
 }

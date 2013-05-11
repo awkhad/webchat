@@ -91,7 +91,7 @@
         return names.push($(this).text());
       });
       if (names.indexOf(user.Name) === -1) {
-        return $("#userlist>ul").append($("<li>" + user.Name + "</li>"));
+        return $("#userlist>ul").append($("<li><img src=" + user.Avatar + "/>" + user.Name + "</li>"));
       }
     };
 

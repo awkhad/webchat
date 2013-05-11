@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	//"fmt"
 	"github.com/robfig/revel"
 	"webchat/app/form"
 	"webchat/app/model"
@@ -36,20 +36,35 @@ func (c Users) Create(userform *form.UserForm) revel.Result {
 	return c.Redirect(Application.Index)
 }
 
-func (c Users) EditSettings() revel.Result {
-	return c.Render()
-}
-
-func (c Users) SaveSettings() revel.Result {
-	return nil
-}
-
 func (c Users) MyRooms() revel.Result {
 	user := CurrentUser(c.Controller)
-
-	fmt.Println(user)
 
 	rooms := user.Rooms()
 
 	return c.Render(rooms)
+}
+
+func (c Users) EditSettings() revel.Result {
+	user := CurrentUser(c.Controller)
+	return c.Render(user)
+}
+
+func (c Users) SaveSettings(setting *form.Settings) revel.Result {
+	user := CurrentUser(c.Controller)
+
+	if err := user.SaveSettings(setting); err != nil {
+		c.Flash.Error(err.Error())
+		return c.Redirect(Users.EditSettings)
+	}
+
+	c.Flash.Success("save success")
+	return c.Redirect(Users.EditSettings)
+}
+
+func (c Users) Profile() revel.Result {
+	return nil
+}
+
+func (c Users) Avatar() revel.Result {
+	return nil
 }

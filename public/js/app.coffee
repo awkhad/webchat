@@ -75,7 +75,7 @@ class Room
       names.push $(this).text()
 
     if names.indexOf(user.Name) == -1
-      $("#userlist>ul").append $("<li>#{user.Name}</li>")
+      $("#userlist>ul").append $("<li><img src=#{user.Avatar}/>#{user.Name}</li>")
 
   removeUserFromList: (user) ->
     $("#userlist>ul>li").each ->

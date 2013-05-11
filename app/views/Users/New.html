@@ -13,7 +13,7 @@
             <form class="form-horizontal" action="{{url "Users.Create"}}" method="post" accept-charset="utf-8">
                 <div class="control-group">
                     {{with $field := field "userform.Name" .}}
-                    <label class="control-label" for="inputEmail">Name</label>
+                    <label class="control-label" for="inputName">Name</label>
                     <div class="controls">
                         <input type="text" id="inputName" placeholder="Name" name="{{$field.Name}}" value="{{$field.Flash}}">
                         * <span class="error">{{$field.Error}}</span>

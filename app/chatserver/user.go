@@ -16,8 +16,9 @@ type OnlineUser struct {
 }
 
 type UserInfo struct {
-	Name  string
-	Email string
+	Name   string
+	Email  string
+	Avatar string
 }
 
 func NewOnlineUser(user *model.User, ws *websocket.Conn, room *ActiveRoom) *OnlineUser {
@@ -26,11 +27,14 @@ func NewOnlineUser(user *model.User, ws *websocket.Conn, room *ActiveRoom) *Onli
 		Connection: ws,
 		Send:       make(chan *Event, 512),
 		Room:       room,
+
 		Info: &UserInfo{
-			Name:  user.Name,
-			Email: user.Email,
+			Name:   user.Name,
+			Email:  user.Email,
+			Avatar: user.AvatarUrl("mini"),
 		},
 	}
+
 	return onlineUser
 }
 

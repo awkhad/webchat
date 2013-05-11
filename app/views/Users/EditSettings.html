@@ -1,6 +1,129 @@
 {{set . "title" "edit settings"}}
 {{template "header.html" .}}
 <div class="container">
-    <h1> edit settings</h1>
+    <div class="row">
+        <div class="span9">
+            {{if .flash.error }}
+            <div class="alert alert-error">
+                {{.flash.error}}
+            </div>
+            {{end}}
+
+            {{if .flash.success}}
+            <div class="alert alert-success">
+                {{.flash.success}}
+            </div>
+            {{end}}
+
+            <form accept-charset="UTF-8" action="{{url "Users.SaveSettings"}}" class="form-horizontal" method="post">
+                <div class="control-group">
+                    <label class="control-label" for="user_nickname">Name:</label>
+                    <div class="controls">
+                        <input  disabled="disabled"  name="user[nickname]" size="50" type="text" value={{.user.Name}}>
+                    </div>
+                </div>
+
+                <div class="control-group email">
+                    <label class="email control-label" for="user_email">Email:</label>
+                    <div class="controls">
+                        <input disabled="disabled" name="user[email]"  type="email" value={{.user.Email}}>
+                    </div>
+                </div>
+
+                <div class="control-group ">
+                    <label class="control-label" for="site">Site:</label>
+                    <div class="controls">
+                        <input  name="setting.Site" id="site" type="text" value="{{.user.Site}}">
+                    </div>
+                </div>
+
+                <div class="control-group ">
+                    <label class="control-label" for="weibo">Weibo:</label>
+                    <div class="controls">
+                        <input class="span4" id="weibo" name="setting.Weibo" type="text" value="{{.user.Weibo}}">
+                    </div>
+                </div>
+                <div class="control-group ">
+                    <label class="control-label" for="signature">Signature:</label>
+                    <div class="controls">
+                        <input class="span4" id="signature" name="setting.Signature" type="text" value="{{.user.Signature}}">
+                    </div>
+                </div>
+                <div class="control-group text">
+                    <label class="text control-label" for="introduction">Introduction:</label>
+                    <div class="controls">
+                        <textarea class="span4" cols="40" name="setting.Introduction" rows="5">{{.user.Introduction}}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <input class="btn btn-small btn-primary" name="commit" type="submit" value="Save">
+                </div>
+            </form>
+
+            <div class="box">
+                <div class="box-header"> Avatar: </div>
+
+                <form accept-charset="UTF-8" action="{{url "Users.Avatar"}}" class="form-horizontal" enctype="multipart/form-data"  method="post" >
+                        <div class="control-group">
+                            <div class="control-label">current avatar:</div>
+                            <div class="controls">
+                            {{if .user.Avatar }}
+                                <img alt="large avatar" class="large_avatar" src="{{.user.Avatar}}">
+                                <img alt="medium avatar" class="medium_avatar" src="{{.user.Avatar}}">
+                                <img alt="mini avatar" class="mini_avatar" src="{{.user.Avatar}}">
+                            {{else}}
+                                <img alt="large avatar" class="large_avatar" src="/public/avatar/default.png">
+                                <img alt="medium avatar" class="medium_avatar" src="/public/avatar/medium_default.png">
+                                <img alt="mini avatar" class="mini_avatar" src="/public/avatar/mini_default.png">
+                            {{end}}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="user_avatar">chose pic:</label>
+                            <div class="controls">
+                                <input id="user_avatar" name="user" type="file">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input class="btn btn-small btn-primary" name="commit" type="submit" value="上传新头像">
+                        </div>
+                </form>
+
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    修改密码
+                </div>
+                <div class="inner">
+                    <form accept-charset="UTF-8" action="/users/update_password" class="form-horizontal"  method="post">
+                        <div class="control-group password ">
+                            <label class="password control-label" for="user_current_password">当前密码</label>
+                            <div class="controls">
+                                <input class="password "  name="user[current_password]" size="50" type="password">
+                            </div>
+                        </div>
+                        <div class="control-group password ">
+                            <label class="password control-label" for="user_password">新密码</label>
+                            <div class="controls">
+                                <input class="password" name="user[password]" size="50" type="password">
+                            </div>
+                        </div>
+                        <div class="control-group password ">
+                            <label class="password control-label" for="user_password_confirmation">新密码确认</label>
+                            <div class="controls">
+                                <input class="password "  name="" size="50" type="password">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input class="btn btn-small btn-primary" name="commit" type="submit" value="修改密码">
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 {{template "footer.html" .}}

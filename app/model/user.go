@@ -16,6 +16,12 @@ type User struct {
 	Email         string
 	Salt          string
 	Encryptpasswd string
+	Site          string
+	Weibo         string
+	Introduction  string
+	Signature     string
+	Avatar        string
+	Github        string
 	Created       time.Time
 	Updated       time.Time
 }
@@ -110,4 +116,28 @@ func (u *User) Rooms() []Room {
 	var rooms []Room
 	rooms = FindRoomByUserId(u.Id)
 	return rooms
+}
+
+func (u *User) SaveSettings(setting *form.Settings) error {
+	db := GetDblink()
+
+	u.Weibo = setting.Weibo
+	u.Site = setting.Site
+	u.Introduction = setting.Introduction
+	u.Signature = setting.Signature
+	u.Github = setting.Github
+
+	if err := db.Save(u); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (u *User) AvatarUrl(size string) string {
+	if u.Avatar == "" {
+		return "/public/avatar/" + size + "_default.png"
+	}
+
+	return u.Avatar
 }

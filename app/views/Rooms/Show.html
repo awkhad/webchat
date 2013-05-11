@@ -1,4 +1,4 @@
-{{set . "title" "chating"}}
+{{set . "title" .roomkey}}
 {{template "header.html" .}}
 
 <div class="container-fluid">
@@ -18,7 +18,11 @@
             <div class="userlist" id="userlist">
                 <ul>
                     {{range .users}}
-                        <li>{{.Name}}</li>
+                        {{if .Avatar}}
+                            <li><img src="{{.Avatar}}"/>{{.Name}}</li>
+                        {{else}}
+                            <li><img src="/public/avatar/mini_default.png"/>{{.Name}}</li>
+                        {{end}}
                     {{end}}
                 </ul>
             </div>
