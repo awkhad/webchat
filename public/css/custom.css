@@ -19,6 +19,10 @@ body{
     padding: 10px;
 }
 
+.room span {
+    float: right;
+}
+
 .chat-main, .chat-sidebar {
     height: auto;
     border: 1px solid #DDD;

@@ -3,41 +3,6 @@ package routes
 
 import "github.com/robfig/revel"
 
-type tApplication struct{}
-
-var Application tApplication
-
-func (p tApplication) CheckUser() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("Application.CheckUser", args).Url
-}
-
-func (p tApplication) AddUser() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("Application.AddUser", args).Url
-}
-
-func (p tApplication) Index() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("Application.Index", args).Url
-}
-
-type tRoomApi struct{}
-
-var RoomApi tRoomApi
-
-func (p tRoomApi) Users(
-	roomkey string,
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "roomkey", roomkey)
-	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
-}
-
 type tWebsocket struct{}
 
 var Websocket tWebsocket
@@ -53,31 +18,39 @@ func (p tWebsocket) Chat(
 	return revel.MainRouter.Reverse("Websocket.Chat", args).Url
 }
 
-type tTestRunner struct{}
+type tRoomApi struct{}
 
-var TestRunner tTestRunner
+var RoomApi tRoomApi
 
-func (p tTestRunner) Index() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("TestRunner.Index", args).Url
-}
-
-func (p tTestRunner) Run(
-	suite string,
-	test string,
+func (p tRoomApi) Users(
+	roomkey string,
 ) string {
 	args := make(map[string]string)
 
-	revel.Unbind(args, "suite", suite)
-	revel.Unbind(args, "test", test)
-	return revel.MainRouter.Reverse("TestRunner.Run", args).Url
+	revel.Unbind(args, "roomkey", roomkey)
+	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
 }
 
-func (p tTestRunner) List() string {
+type tApplication struct{}
+
+var Application tApplication
+
+func (p tApplication) Index() string {
 	args := make(map[string]string)
 
-	return revel.MainRouter.Reverse("TestRunner.List", args).Url
+	return revel.MainRouter.Reverse("Application.Index", args).Url
+}
+
+func (p tApplication) CheckUser() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Application.CheckUser", args).Url
+}
+
+func (p tApplication) AddUser() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Application.AddUser", args).Url
 }
 
 type tStatic struct{}
@@ -108,41 +81,31 @@ func (p tStatic) ServeModule(
 	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
 }
 
-type tRooms struct{}
+type tTestRunner struct{}
 
-var Rooms tRooms
+var TestRunner tTestRunner
 
-func (p tRooms) Index(
-	p int,
+func (p tTestRunner) Index() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("TestRunner.Index", args).Url
+}
+
+func (p tTestRunner) Run(
+	suite string,
+	test string,
 ) string {
 	args := make(map[string]string)
 
-	revel.Unbind(args, "p", p)
-	return revel.MainRouter.Reverse("Rooms.Index", args).Url
+	revel.Unbind(args, "suite", suite)
+	revel.Unbind(args, "test", test)
+	return revel.MainRouter.Reverse("TestRunner.Run", args).Url
 }
 
-func (p tRooms) New() string {
+func (p tTestRunner) List() string {
 	args := make(map[string]string)
 
-	return revel.MainRouter.Reverse("Rooms.New", args).Url
-}
-
-func (p tRooms) Create(
-	rf interface{},
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "rf", rf)
-	return revel.MainRouter.Reverse("Rooms.Create", args).Url
-}
-
-func (p tRooms) Show(
-	roomkey string,
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "roomkey", roomkey)
-	return revel.MainRouter.Reverse("Rooms.Show", args).Url
+	return revel.MainRouter.Reverse("TestRunner.List", args).Url
 }
 
 type tSessions struct{}
@@ -220,4 +183,61 @@ func (p tUsers) Avatar() string {
 	args := make(map[string]string)
 
 	return revel.MainRouter.Reverse("Users.Avatar", args).Url
+}
+
+type tRooms struct{}
+
+var Rooms tRooms
+
+func (p tRooms) Index(
+	p int,
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "p", p)
+	return revel.MainRouter.Reverse("Rooms.Index", args).Url
+}
+
+func (p tRooms) New() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Rooms.New", args).Url
+}
+
+func (p tRooms) Create(
+	rf interface{},
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "rf", rf)
+	return revel.MainRouter.Reverse("Rooms.Create", args).Url
+}
+
+func (p tRooms) Show(
+	roomkey string,
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "roomkey", roomkey)
+	return revel.MainRouter.Reverse("Rooms.Show", args).Url
+}
+
+func (p tRooms) Edit(
+	roomkey string,
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "roomkey", roomkey)
+	return revel.MainRouter.Reverse("Rooms.Edit", args).Url
+}
+
+func (p tRooms) Update(
+	roomkey string,
+	updateroom interface{},
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "roomkey", roomkey)
+	revel.Unbind(args, "updateroom", updateroom)
+	return revel.MainRouter.Reverse("Rooms.Update", args).Url
 }

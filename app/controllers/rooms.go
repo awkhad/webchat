@@ -85,6 +85,36 @@ func (c Rooms) Show(roomkey string) revel.Result {
 	return c.Render(room, users)
 }
 
+func (c Rooms) Edit(roomkey string) revel.Result {
+
+	if !isLogin(c.Controller) {
+		c.Flash.Error("Please login first")
+		return c.Redirect(Application.Index)
+	}
+
+	room := model.FindRoomByRoomKey(roomkey)
+
+	return c.Render(room)
+}
+
+func (c Rooms) Update(roomkey string, updateroom *form.UpdateRoom) revel.Result {
+
+	if !isLogin(c.Controller) {
+		c.Flash.Error("Please login first")
+		return c.Redirect(Application.Index)
+	}
+
+	room := model.FindRoomByRoomKey(roomkey)
+
+	if err := room.Update(updateroom); err != nil {
+		c.Flash.Error(err.Error())
+		return c.Redirect("/r/%s/edit", room.RoomKey)
+	}
+
+	c.Flash.Success("update success")
+	return c.Redirect("/r/%s/edit", room.RoomKey)
+}
+
 func (c RoomApi) Users(roomkey string) revel.Result {
 
 	// get a activeRoom and get room's user list 

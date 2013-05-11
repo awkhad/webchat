@@ -73,7 +73,7 @@ func FindRoomByRoomKey(rk string) *Room {
 	var room Room
 
 	if err := db.Where("room_key=?", rk).Find(&room); err != nil {
-		panic(err)
+		return nil
 	}
 
 	return &room
@@ -104,6 +104,19 @@ func (room *Room) Save() (*Room, error) {
 	}
 
 	return room, nil
+}
+
+func (room *Room) Update(form *form.UpdateRoom) error {
+	db := GetDblink()
+
+	room.Description = form.Desc
+	room.Title = form.Title
+
+	if err := db.Save(room); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (room *Room) ValidatesUniqueness() error {

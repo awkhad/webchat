@@ -18,6 +18,8 @@ GET     /rooms                                  Rooms.Index
 GET     /rooms/new                              Rooms.New
 GET     /r/{roomkey}                            Rooms.Show
 GET     /r/{roomkey}/users.json                 RoomApi.Users
+GET     /r/{roomkey}/edit                       Rooms.Edit
+POST    /r/{roomkey}/update                     Rooms.Update
 WS      /r/{roomkey}/chatting                   Websocket.Chat
 
 # Ignore favicon requests

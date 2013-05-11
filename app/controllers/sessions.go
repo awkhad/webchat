@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/robfig/revel"
 	"webchat/app/form"
 	"webchat/app/model"
+	//"fmt"
 )
 
 type Sessions struct {
@@ -43,11 +43,9 @@ func (c Sessions) Destroy() revel.Result {
 		delete(c.Session, k)
 	}
 
-	onlineUser := ChatServer.GetUserById(user.Id)
-
-	// close conn
-	if err := onlineUser.Connection.Close(); err != nil {
-		fmt.Println("close conn faild")
+	if onlineUser := ChatServer.GetUserById(user.Id); onlineUser != nil {
+		// close conn
+		onlineUser.Connection.Close()
 	}
 
 	return c.Redirect(Application.Index)

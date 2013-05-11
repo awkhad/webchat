@@ -6,6 +6,7 @@
             <div class="room">
                 <div class="room-header">
                     <a href="/r/{{.RoomKey}}">{{.Id}} | {{.Title}} {{if eq .Private true}}<i class="icon-lock"></i> {{end}} </a>
+                    <span><a href="/r/{{.RoomKey}}/edit">edit</a></span>
                 </div>
                 <div class="room-body">
                     {{.Description}}

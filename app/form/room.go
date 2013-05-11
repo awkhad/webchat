@@ -18,3 +18,13 @@ func (rf *RoomForm) Validate(v *revel.Validation) {
 	v.Required(rf.Title)
 	v.Required(rf.Desc)
 }
+
+type UpdateRoom struct {
+	Title string
+	Desc  string
+}
+
+func (upf *UpdateRoom) Validate(v *revel.Validation) {
+	v.Required(upf.Title)
+	v.Required(upf.Desc)
+}
