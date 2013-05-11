@@ -50,3 +50,9 @@ task :gofmt do
   system 'find . -name "*.go" -exec gofmt -w {} \;'
 end
 
+desc "code line"
+task :stats do
+  #system 'wc -l `find ./ -name "*.go"`|tail -n1'
+  system 'wc -l `find ./ -name "*.go"`'
+end
+
