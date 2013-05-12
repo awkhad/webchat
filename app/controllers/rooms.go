@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/robfig/revel"
 	"webchat/app/chatserver"
 	"webchat/app/form"
@@ -16,17 +15,21 @@ type RoomApi struct {
 	*revel.Controller
 }
 
-type UserList struct {
-	Users []*chatserver.UserInfo
+
+
+// index
+type RoomList struct {
+    Room *model.Room
 }
 
 func (c Rooms) Index(p int) revel.Result {
-	fmt.Println("p is:", p)
 	if p == 0 {
 		p = 1
 	}
+
 	rooms := model.FindOnePage(p)
 	allPage := (model.RoomCount() + model.PageSize - 1) / model.PageSize
+
 	return c.Render(rooms, p, allPage)
 }
 
@@ -78,13 +81,18 @@ func (c Rooms) Show(roomkey string) revel.Result {
 	}
 
 	room := model.FindRoomByRoomKey(roomkey)
-
 	activeRoom := ChatServer.GetActiveRoom(roomkey)
+
+    // user list
 	users := activeRoom.UserList()
 
-	userAvatar := CurrentUser(c.Controller).AvatarUrl()
+    currentUser := CurrentUser(c.Controller)
+    // room list 
+    rooms := model.FindRoomByUserId(currentUser.Id)
+    // user avatar
+	userAvatar := currentUser.AvatarUrl()
 
-	return c.Render(room, users, userAvatar)
+	return c.Render(room, users, userAvatar, rooms)
 }
 
 func (c Rooms) Edit(roomkey string) revel.Result {
@@ -115,6 +123,11 @@ func (c Rooms) Update(roomkey string, updateroom *form.UpdateRoom) revel.Result 
 
 	c.Flash.Success("update success")
 	return c.Redirect("/r/%s/edit", room.RoomKey)
+}
+
+
+type UserList struct {
+	Users []*chatserver.UserInfo
 }
 
 func (c RoomApi) Users(roomkey string) revel.Result {

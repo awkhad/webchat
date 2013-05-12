@@ -23,7 +23,7 @@ body{
     float: right;
 }
 
-.chat-main, .chat-sidebar {
+.chat-main, .chat-sidebar, .roomlist {
     height: auto;
     border: 1px solid #DDD;
     background-color: #fff;
@@ -41,13 +41,13 @@ body{
 }
 
 .chat-main {
-    height: 900px;
+    height: 100px;
+    margin-bottom: 10px;
 }
 
 
 .chat-area {
     height: 80px;
-    width: 100%;
     margin-bottom: 10px;
     border: 1px solid #DDD;
     background-color: #fff;
@@ -65,7 +65,7 @@ body{
 }
 
 .chat-form textarea {
-    width: 500px;
+    width: 300px; 
 }
 
 .chat-help {
