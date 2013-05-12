@@ -39,3 +39,18 @@ type Settings struct {
 	Signature    string
 	Github       string
 }
+
+// change password form
+
+type PasswordFrom struct {
+	CurrentPasswd string
+	NewPasswd     string
+	PasswdRepeat  string
+}
+
+// validates
+func (pw *PasswordFrom) Validate(v *revel.Validation) {
+	v.Required(pw.CurrentPasswd)
+	v.Required(pw.PasswdRepeat)
+	v.Required(pw.NewPasswd)
+}

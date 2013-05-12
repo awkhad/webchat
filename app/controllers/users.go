@@ -68,3 +68,15 @@ func (c Users) Profile() revel.Result {
 func (c Users) Avatar() revel.Result {
 	return nil
 }
+
+func (c Users) ChangePasswd(pw *form.PasswordFrom) revel.Result {
+	pw.Validate(c.Validation)
+
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(Users.EditSettings)
+	}
+
+	return nil
+}

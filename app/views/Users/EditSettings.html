@@ -63,11 +63,10 @@
 
             <div class="box">
                 <div class="box-header"> Avatar: </div>
-
                 <form accept-charset="UTF-8" action="{{url "Users.Avatar"}}" class="form-horizontal" enctype="multipart/form-data"  method="post" >
-                        <div class="control-group">
-                            <div class="control-label">current avatar:</div>
-                            <div class="controls">
+                    <div class="control-group">
+                        <div class="control-label">current avatar:</div>
+                        <div class="controls">
                             {{if .user.Avatar }}
                                 <img alt="large avatar" class="large_avatar" src="{{.user.Avatar}}">
                                 <img alt="medium avatar" class="medium_avatar" src="{{.user.Avatar}}">
@@ -77,50 +76,57 @@
                                 <img alt="medium avatar" class="medium_avatar" src="/public/avatar/medium_default.png">
                                 <img alt="mini avatar" class="mini_avatar" src="/public/avatar/mini_default.png">
                             {{end}}
-                            </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label" for="user_avatar">chose pic:</label>
-                            <div class="controls">
-                                <input id="user_avatar" name="user" type="file">
-                            </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="user_avatar">chose pic:</label>
+                        <div class="controls">
+                            <input id="user_avatar" name="user" type="file">
                         </div>
-                        <div class="form-actions">
-                            <input class="btn btn-small btn-primary" name="commit" type="submit" value="上传新头像">
-                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <input class="btn btn-small btn-primary" name="commit" type="submit" value="上传新头像">
+                    </div>
                 </form>
 
             </div>
             <div class="box">
                 <div class="box-header">
-                    修改密码
+                    Change Passwd:
                 </div>
-                <div class="inner">
-                    <form accept-charset="UTF-8" action="/users/update_password" class="form-horizontal"  method="post">
-                        <div class="control-group password ">
-                            <label class="password control-label" for="user_current_password">当前密码</label>
-                            <div class="controls">
-                                <input class="password "  name="user[current_password]" size="50" type="password">
-                            </div>
-                        </div>
-                        <div class="control-group password ">
-                            <label class="password control-label" for="user_password">新密码</label>
-                            <div class="controls">
-                                <input class="password" name="user[password]" size="50" type="password">
-                            </div>
-                        </div>
-                        <div class="control-group password ">
-                            <label class="password control-label" for="user_password_confirmation">新密码确认</label>
-                            <div class="controls">
-                                <input class="password "  name="" size="50" type="password">
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <input class="btn btn-small btn-primary" name="commit" type="submit" value="修改密码">
-                        </div>
-                    </form>
 
-                </div>
+                <form accept-charset="UTF-8" action="{{url "Users.ChangePasswd"}}" class="form-horizontal"  method="post">
+                    <div class="control-group">
+                        {{with $field := field "pw.CurrentPasswd" .}}
+                        <label class="control-label" for="user_current_password">current password:</label>
+                        <div class="controls">
+                            <input  name="{{$field.Name}}" size="50" type="password" value="{{$field.Flash}}">
+                            <span class="error">{{$field.Error}}</span>
+                        </div>
+                        {{end}}
+                    </div>
+                    <div class="control-group">
+                        {{with $field := field "pw.NewPasswd" .}}
+                        <label class="password control-label" for="user_password_confirmation">NewPasswd:</label>
+                        <div class="controls">
+                            <input  name="{{$field.Name}}" size="50" type="password" value="{{$field.Flash}}">
+                            <span class="error">{{$field.Error}}</span>
+                        </div>
+                        {{end}}
+                    </div>
+                    <div class="control-group">
+                        {{with $field := field "pw.PasswdRepeat" .}}
+                        <label class="password control-label" for="user_password">NewPasswd Repeat</label>
+                        <div class="controls">
+                            <input name="{{$field.Name}}" size="50" type="password" value="{{$field.Flash}}">
+                            <span class="error">{{$field.Error}}</span>
+                        </div>
+                        {{end}}
+                    </div>
+                    <div class="form-actions">
+                        <input class="btn btn-small btn-primary" name="commit" type="submit" value="修改密码">
+                    </div>
+                </form>
             </div>
 
         </div>

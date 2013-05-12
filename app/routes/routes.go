@@ -3,34 +3,6 @@ package routes
 
 import "github.com/robfig/revel"
 
-type tWebsocket struct{}
-
-var Websocket tWebsocket
-
-func (p tWebsocket) Chat(
-	roomkey string,
-	ws interface{},
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "roomkey", roomkey)
-	revel.Unbind(args, "ws", ws)
-	return revel.MainRouter.Reverse("Websocket.Chat", args).Url
-}
-
-type tRoomApi struct{}
-
-var RoomApi tRoomApi
-
-func (p tRoomApi) Users(
-	roomkey string,
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "roomkey", roomkey)
-	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
-}
-
 type tApplication struct{}
 
 var Application tApplication
@@ -53,32 +25,32 @@ func (p tApplication) AddUser() string {
 	return revel.MainRouter.Reverse("Application.AddUser", args).Url
 }
 
-type tStatic struct{}
+type tRoomApi struct{}
 
-var Static tStatic
+var RoomApi tRoomApi
 
-func (p tStatic) Serve(
-	prefix string,
-	filepath string,
+func (p tRoomApi) Users(
+	roomkey string,
 ) string {
 	args := make(map[string]string)
 
-	revel.Unbind(args, "prefix", prefix)
-	revel.Unbind(args, "filepath", filepath)
-	return revel.MainRouter.Reverse("Static.Serve", args).Url
+	revel.Unbind(args, "roomkey", roomkey)
+	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
 }
 
-func (p tStatic) ServeModule(
-	moduleName string,
-	prefix string,
-	filepath string,
+type tWebsocket struct{}
+
+var Websocket tWebsocket
+
+func (p tWebsocket) Chat(
+	roomkey string,
+	ws interface{},
 ) string {
 	args := make(map[string]string)
 
-	revel.Unbind(args, "moduleName", moduleName)
-	revel.Unbind(args, "prefix", prefix)
-	revel.Unbind(args, "filepath", filepath)
-	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
+	revel.Unbind(args, "roomkey", roomkey)
+	revel.Unbind(args, "ws", ws)
+	return revel.MainRouter.Reverse("Websocket.Chat", args).Url
 }
 
 type tTestRunner struct{}
@@ -108,29 +80,32 @@ func (p tTestRunner) List() string {
 	return revel.MainRouter.Reverse("TestRunner.List", args).Url
 }
 
-type tSessions struct{}
+type tStatic struct{}
 
-var Sessions tSessions
+var Static tStatic
 
-func (p tSessions) New() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("Sessions.New", args).Url
-}
-
-func (p tSessions) Create(
-	loginform interface{},
+func (p tStatic) Serve(
+	prefix string,
+	filepath string,
 ) string {
 	args := make(map[string]string)
 
-	revel.Unbind(args, "loginform", loginform)
-	return revel.MainRouter.Reverse("Sessions.Create", args).Url
+	revel.Unbind(args, "prefix", prefix)
+	revel.Unbind(args, "filepath", filepath)
+	return revel.MainRouter.Reverse("Static.Serve", args).Url
 }
 
-func (p tSessions) Destroy() string {
+func (p tStatic) ServeModule(
+	moduleName string,
+	prefix string,
+	filepath string,
+) string {
 	args := make(map[string]string)
 
-	return revel.MainRouter.Reverse("Sessions.Destroy", args).Url
+	revel.Unbind(args, "moduleName", moduleName)
+	revel.Unbind(args, "prefix", prefix)
+	revel.Unbind(args, "filepath", filepath)
+	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
 }
 
 type tUsers struct{}
@@ -183,6 +158,40 @@ func (p tUsers) Avatar() string {
 	args := make(map[string]string)
 
 	return revel.MainRouter.Reverse("Users.Avatar", args).Url
+}
+
+func (p tUsers) ChangePasswd(
+	pw interface{},
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "pw", pw)
+	return revel.MainRouter.Reverse("Users.ChangePasswd", args).Url
+}
+
+type tSessions struct{}
+
+var Sessions tSessions
+
+func (p tSessions) New() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Sessions.New", args).Url
+}
+
+func (p tSessions) Create(
+	loginform interface{},
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "loginform", loginform)
+	return revel.MainRouter.Reverse("Sessions.Create", args).Url
+}
+
+func (p tSessions) Destroy() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Sessions.Destroy", args).Url
 }
 
 type tRooms struct{}

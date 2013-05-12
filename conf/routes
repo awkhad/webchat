@@ -13,6 +13,7 @@ GET     /user/edit/settings                     Users.EditSettings
 GET     /user/myrooms                           Users.MyRooms
 POST    /user/save/settings                     Users.SaveSettings
 POST    /user/sign_up                           Users.Create
+POST    /user/changepasswd                      Users.ChangePasswd
 
 GET     /rooms                                  Rooms.Index
 GET     /rooms/new                              Rooms.New
