@@ -76,3 +76,12 @@ body{
 .pagination .next {
     float: right;
 }
+
+.userlist img {
+    width: 25px;
+    height: 25px;
+}
+
+.avatar img {
+    width: 60px;
+}

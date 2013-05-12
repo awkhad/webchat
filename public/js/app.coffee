@@ -12,8 +12,8 @@ $ ->
   $('#sayit-button').click ->
     text = $('#chat-form').val()
     if text
-      message = new Message("text", text)
-      room.sendMessage(message)
+      sMessage = new Message("text", text)
+      room.sendMessage(sMessage)
     else
       return
     
@@ -47,43 +47,59 @@ class Room
     @ws_conn.send(JSON.stringify(message))
     $('#chat-form').val('')
 
-    # json 
-    # websocket send
+    # json websocket send
   reveiveMessage: (e) ->
-      message = $.parseJSON(e.data)
+      m= $.parseJSON(e.data)
 
-      if message.Type == "join"
-        @addUserToList(message.User)
-      if message.Type == "leave"
-        @removeUserFromList(message.User)
+      if m.Type == "join"
+        @addUserToList(m.User)
+      if m.Type == "leave"
+        @removeUserFromList(m.User)
 
-      console.log message
+      console.log m
+      rMessage = new TextMessage(m.Type, m.Text, m.User.Name, m.User.Avatar)
+      rMessage.show()
 
   getUsersList: ->
       url = window.location.pathname + "/users.json"
 
       $.getJSON(url, (data) =>
           if data.Users != null
-            #@userlist.push(x) for x in data.Users
             @userlist = data.Users
       )
       return @userlist
 
   addUserToList: (user)->
     names = []
-    $("#userlist>ul>li").each ->
+    $("#userlist span").each ->
       names.push $(this).text()
 
+    console.log names
     if names.indexOf(user.Name) == -1
-      $("#userlist>ul").append $("<li><img src=#{user.Avatar}/>#{user.Name}</li>")
+      $("#userlist>ul").append $("<li><img src=#{user.Avatar}/><span>#{user.Name}</span></li>")
 
   removeUserFromList: (user) ->
-    $("#userlist>ul>li").each ->
+    $("#userlist span").each ->
       if $(this).text() == user.Name
-        $(this).remove()
+        $(this).parent().remove()
 
 
+# message user send to server
 class Message
   constructor: (type, text) ->
     @type = type
     @text = text
+
+  autoUrl: ->
+    url = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+    @text = @text.replace(url, "<a href=\"$1\" target='_blank'>$1</a>")
+    return @
+
+# deal with text message, show with user
+class TextMessage extends Message
+  constructor: (@type, @text, @user, @avatar) ->
+
+  show: ->
+    @autoUrl()
+    $('.chat-main').append @text+"<br>"
+

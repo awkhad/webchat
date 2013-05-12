@@ -31,7 +31,7 @@ func NewOnlineUser(user *model.User, ws *websocket.Conn, room *ActiveRoom) *Onli
 		Info: &UserInfo{
 			Name:   user.Name,
 			Email:  user.Email,
-			Avatar: user.AvatarUrl("mini"),
+			Avatar: user.AvatarUrl(),
 		},
 	}
 

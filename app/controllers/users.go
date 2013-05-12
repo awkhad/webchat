@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	//"fmt"
 	"github.com/robfig/revel"
 	"webchat/app/form"
 	"webchat/app/model"
+    //"mime/multipart"
+    // "log"
 )
 
 type Users struct {
@@ -70,9 +71,16 @@ func (c Users) Profile() revel.Result {
 	return nil
 }
 
-func (c Users) Avatar() revel.Result {
-	return nil
-}
+// func (c Users) Avatar(file []byte) revel.Result {
+// 	if !isLogin(c.Controller) {
+// 		c.Flash.Error("Please login first")
+// 		return c.Redirect(Application.Index)
+// 	}
+//     avatar := os.Open()
+
+//     log.Println("file is:", file)
+// 	return nil
+// }
 
 func (c Users) ChangePasswd(pw *form.PasswordFrom) revel.Result {
 	if !isLogin(c.Controller) {

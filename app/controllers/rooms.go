@@ -82,7 +82,9 @@ func (c Rooms) Show(roomkey string) revel.Result {
 	activeRoom := ChatServer.GetActiveRoom(roomkey)
 	users := activeRoom.UserList()
 
-	return c.Render(room, users)
+	userAvatar := CurrentUser(c.Controller).AvatarUrl()
+
+	return c.Render(room, users, userAvatar)
 }
 
 func (c Rooms) Edit(roomkey string) revel.Result {

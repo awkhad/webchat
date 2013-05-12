@@ -2,12 +2,14 @@ package model
 
 import (
 	//"github.com/robfig/revel"
+	"webchat/app/form"
 	"crypto/sha1"
+	"crypto/md5"
 	"errors"
+	"strings"
 	"fmt"
 	"math/rand"
 	"time"
-	"webchat/app/form"
 )
 
 type User struct {
@@ -20,7 +22,7 @@ type User struct {
 	Weibo         string
 	Introduction  string
 	Signature     string
-	Avatar        string
+	// Avatar        string
 	Github        string
 	Created       time.Time
 	Updated       time.Time
@@ -134,14 +136,6 @@ func (u *User) SaveSettings(setting *form.Settings) error {
 	return nil
 }
 
-func (u *User) AvatarUrl(size string) string {
-	if u.Avatar == "" {
-		return "/public/avatar/" + size + "_default.png"
-	}
-
-	return u.Avatar
-}
-
 func (u *User) UpdatePasswd(newPasswd, currentPasswd string) error {
 	db := GetDblink()
 
@@ -156,3 +150,20 @@ func (u *User) UpdatePasswd(newPasswd, currentPasswd string) error {
 
 	return nil
 }
+
+func Hash(email string) string {
+	email = strings.ToLower(strings.TrimSpace(email))
+	hash := md5.New()
+	hash.Write([]byte(email))
+	return fmt.Sprintf("%x", hash.Sum(nil))
+}
+
+func (u *User) AvatarUrl() string {
+	// if u.Avatar == "" {
+	// 	return "/public/avatar/" + size + "_default.png"
+	// }
+
+	// return u.Avatar
+	return "http://www.gravatar.com/avatar/" + Hash(u.Email)
+}
+
