@@ -141,3 +141,18 @@ func (u *User) AvatarUrl(size string) string {
 
 	return u.Avatar
 }
+
+func (u *User) UpdatePasswd(newPasswd, currentPasswd string) error {
+	db := GetDblink()
+
+	if !Authenticate(u.Name, currentPasswd) {
+		return errors.New("you  curent password is error!")
+	} else {
+		u.Encryptpasswd = encryptPassword(newPasswd, u.Salt)
+		if err := db.Save(u); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}

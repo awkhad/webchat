@@ -51,6 +51,7 @@ type PasswordFrom struct {
 // validates
 func (pw *PasswordFrom) Validate(v *revel.Validation) {
 	v.Required(pw.CurrentPasswd)
-	v.Required(pw.PasswdRepeat)
 	v.Required(pw.NewPasswd)
+	v.Required(pw.PasswdRepeat)
+	v.Required(pw.PasswdRepeat == pw.NewPasswd).Message("you repeat password do not match")
 }

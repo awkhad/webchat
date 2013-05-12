@@ -3,6 +3,21 @@ package routes
 
 import "github.com/robfig/revel"
 
+type tWebsocket struct{}
+
+var Websocket tWebsocket
+
+func (p tWebsocket) Chat(
+	roomkey string,
+	ws interface{},
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "roomkey", roomkey)
+	revel.Unbind(args, "ws", ws)
+	return revel.MainRouter.Reverse("Websocket.Chat", args).Url
+}
+
 type tApplication struct{}
 
 var Application tApplication
@@ -36,21 +51,6 @@ func (p tRoomApi) Users(
 
 	revel.Unbind(args, "roomkey", roomkey)
 	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
-}
-
-type tWebsocket struct{}
-
-var Websocket tWebsocket
-
-func (p tWebsocket) Chat(
-	roomkey string,
-	ws interface{},
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "roomkey", roomkey)
-	revel.Unbind(args, "ws", ws)
-	return revel.MainRouter.Reverse("Websocket.Chat", args).Url
 }
 
 type tTestRunner struct{}

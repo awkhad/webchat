@@ -16,7 +16,6 @@ func (c Users) New() revel.Result {
 }
 
 func (c Users) Create(userform *form.UserForm) revel.Result {
-
 	userform.Validate(c.Validation)
 
 	if c.Validation.HasErrors() {
@@ -38,7 +37,6 @@ func (c Users) Create(userform *form.UserForm) revel.Result {
 
 func (c Users) MyRooms() revel.Result {
 	user := CurrentUser(c.Controller)
-
 	rooms := user.Rooms()
 
 	return c.Render(rooms)
@@ -46,10 +44,16 @@ func (c Users) MyRooms() revel.Result {
 
 func (c Users) EditSettings() revel.Result {
 	user := CurrentUser(c.Controller)
+
 	return c.Render(user)
 }
 
 func (c Users) SaveSettings(setting *form.Settings) revel.Result {
+	if !isLogin(c.Controller) {
+		c.Flash.Error("Please login first")
+		return c.Redirect(Application.Index)
+	}
+
 	user := CurrentUser(c.Controller)
 
 	if err := user.SaveSettings(setting); err != nil {
@@ -58,6 +62,7 @@ func (c Users) SaveSettings(setting *form.Settings) revel.Result {
 	}
 
 	c.Flash.Success("save success")
+
 	return c.Redirect(Users.EditSettings)
 }
 
@@ -70,6 +75,11 @@ func (c Users) Avatar() revel.Result {
 }
 
 func (c Users) ChangePasswd(pw *form.PasswordFrom) revel.Result {
+	if !isLogin(c.Controller) {
+		c.Flash.Error("Please login first")
+		return c.Redirect(Application.Index)
+	}
+
 	pw.Validate(c.Validation)
 
 	if c.Validation.HasErrors() {
@@ -78,5 +88,14 @@ func (c Users) ChangePasswd(pw *form.PasswordFrom) revel.Result {
 		return c.Redirect(Users.EditSettings)
 	}
 
-	return nil
+	user := CurrentUser(c.Controller)
+
+	if err := user.UpdatePasswd(pw.NewPasswd, pw.CurrentPasswd); err != nil {
+		c.Flash.Error(err.Error())
+		return c.Redirect(Users.EditSettings)
+	} else {
+		c.Flash.Success("change password success")
+	}
+
+	return c.Redirect(Users.EditSettings)
 }
