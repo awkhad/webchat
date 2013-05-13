@@ -5,6 +5,7 @@ import (
 	"webchat/app/chatserver"
 	"webchat/app/form"
 	"webchat/app/model"
+    //"log"
 )
 
 type Rooms struct {
@@ -16,27 +17,28 @@ type RoomApi struct {
 }
 
 
-// index
-type RoomList struct {
-    Room *model.Room
-    RecentUsers []*RecentUser
-}
-
-type RecentUser struct {
-    Id int
-    Avatar string
-    Name string
-}
-
 func (c Rooms) Index(p int) revel.Result {
-	if p == 0 {
-		p = 1
-	}
+	if p == 0 { p = 1 }
 
 	rooms := model.FindOnePage(p)
+
+    // generate roomlist with recent users
+    var roomLists []*model.RoomList
+    for _, room := range rooms {
+        recentUsers := room.GetRecentUsers() // get []*RecentUser
+        //log.Println("recentUsers is:", recentUsers)
+
+        rl := &model.RoomList{
+            Room: &room,
+            RecentUsers: recentUsers,
+        }
+
+        roomLists = append(roomLists, rl)
+    }
+
 	allPage := (model.RoomCount() + model.PageSize - 1) / model.PageSize
 
-	return c.Render(rooms, p, allPage)
+	return c.Render(p, allPage, roomLists)
 }
 
 func (c Rooms) New() revel.Result {

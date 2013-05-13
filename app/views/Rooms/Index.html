@@ -1,14 +1,19 @@
 {{template "header.html" .}}
 <div class="container">
     <div class="row">
-        {{range .rooms}}
-        <div class="span3" id="room-{{.Id}}">
+        {{range .roomLists}}
+        <div class="span3" id="room-{{.Room.Id}}">
             <div class="room">
                 <div class="room-header">
-                    <a href="/r/{{.RoomKey}}">{{.Id}} | {{.Title}} {{if eq .Private true}}<i class="icon-lock"></i> {{end}} </a>
+                    <a href="/r/{{.Room.RoomKey}}">{{.Room.Id}} | {{.Room.Title}} {{if eq .Room.Private true}}<i class="icon-lock"></i> {{end}} </a>
                 </div>
                 <div class="room-body">
-                    {{.Description}}
+                    {{.Room.Description}}
+                </div>
+                <div class="room-recentusers">
+                    {{range .RecentUsers}}
+                    <a href=""> <img src="{{.Avatar}}" alt="" /> </a>
+                    {{end}}
                 </div>
                 <div class="room-footer">
                 </div>

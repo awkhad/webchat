@@ -85,3 +85,10 @@ body{
 .avatar img {
     width: 60px;
 }
+
+.room-recentusers {
+    margin-top: 5px;
+}
+.room-recentusers img{
+    width: 25px;
+}
