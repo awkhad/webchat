@@ -2,10 +2,10 @@ package chatserver
 
 import (
 	"container/list"
-	"webchat/app/model"
-    "strconv"
-	"time"
 	"fmt"
+	"strconv"
+	"time"
+	"webchat/app/model"
 )
 
 type ActiveRoom struct {
@@ -84,17 +84,17 @@ func (r *ActiveRoom) Run() {
 // add user to room recent user list redis
 // add user id to set, use Hash save user info
 func (r *ActiveRoom) AddUserToRecent(user *model.User) {
-    //add userinfo to Hash
-    userKey := "user:" + strconv.Itoa(user.Id)
+	//add userinfo to Hash
+	userKey := "user:" + strconv.Itoa(user.Id)
 
-    userInfo :=  map[string] string {
-        "id": strconv.Itoa(user.Id),
-        "name": user.Name,
-        "avatar": user.AvatarUrl(),
-    }
+	userInfo := map[string]string{
+		"id":     strconv.Itoa(user.Id),
+		"name":   user.Name,
+		"avatar": user.AvatarUrl(),
+	}
 
-    redisClient.Hmset(userKey, userInfo)
-    // add user id to room recent user list
-    roomKey := "room:" + r.RoomKey + ":users"
-    redisClient.Sadd(roomKey, []byte(strconv.Itoa(user.Id)))
+	redisClient.Hmset(userKey, userInfo)
+	// add user id to room recent user list
+	roomKey := "room:" + r.RoomKey + ":users"
+	redisClient.Sadd(roomKey, []byte(strconv.Itoa(user.Id)))
 }

@@ -2,12 +2,12 @@ package model
 
 import (
 	//"github.com/robfig/revel"
-	"github.com/hoisie/redis"
-	"webchat/app/form"
 	"errors"
-    "strconv"
-	"time"
+	"github.com/hoisie/redis"
 	"log"
+	"strconv"
+	"time"
+	"webchat/app/form"
 )
 
 const (
@@ -44,7 +44,6 @@ func RoomCount() int {
 		panic(err)
 	}
 
-	log.Println("itemCount is :", itemCount)
 	return itemCount
 }
 
@@ -54,7 +53,6 @@ func FindRoomByUserId(user_id int) []Room {
 	log.Println("userid is--:", user_id)
 
 	db.Where("user_id=?", user_id).FindAll(&rooms)
-	log.Println("myrooms is --:", rooms)
 	return rooms
 }
 
@@ -135,48 +133,48 @@ func (room *Room) ValidatesUniqueness() error {
 	return nil
 }
 
-
 // room index recent user
 
 type RoomList struct {
-    Room *Room
-    RecentUsers []*RecentUser
+	Id          int
+	RoomKey     string
+	Description string
+	Title       string
+	Private     bool
+	RecentUsers []*RecentUser
 }
 
 type RecentUser struct {
-    Id int
-    Avatar string
-    Name string
+	Id     int
+	Avatar string
+	Name   string
 }
 
 func (r *Room) GetRecentUsers() []*RecentUser {
-    userIds, _ := redisClient.Smembers("room:"+r.RoomKey+":users")
-    var recentusers []*RecentUser
+	userIds, _ := redisClient.Smembers("room:" + r.RoomKey + ":users")
+	var recentusers []*RecentUser
 
-    for _, id := range userIds {
-        key := "user:" + string(id[0])
-        user := make(map[string]string)
-        err := redisClient.Hgetall(key, user)
+	for _, id := range userIds {
+		key := "user:" + string(id[0])
+		user := make(map[string]string)
+		err := redisClient.Hgetall(key, user)
 
-        log.Println("get user from redis is:", user)
+		if err == nil {
+			userid, _ := strconv.Atoi(user["id"])
 
-        if err == nil {
-            userid, _ := strconv.Atoi(user["id"])
+			ru := &RecentUser{
+				Id:     userid, //to int 
+				Avatar: user["avatar"],
+				Name:   user["name"],
+			}
 
-            ru := &RecentUser{
-                Id: userid, //to int 
-                Avatar: user["avatar"],
-                Name: user["name"],
-            }
+			recentusers = append(recentusers, ru)
+		}
+	}
 
-            recentusers = append(recentusers, ru)
-            log.Println("recentuser is in model:", recentusers)
-        }
-    }
+	if len(recentusers) > 5 {
+		recentusers = recentusers[:5]
+	}
 
-    if len(recentusers) > 5 {
-        recentusers =  recentusers[:5]
-    }
-
-    return recentusers
+	return recentusers
 }

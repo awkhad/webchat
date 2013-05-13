@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"github.com/robfig/revel"
+	"log"
 	"webchat/app/chatserver"
 	"webchat/app/form"
 	"webchat/app/model"
-    //"log"
 )
 
 type Rooms struct {
@@ -16,25 +16,35 @@ type RoomApi struct {
 	*revel.Controller
 }
 
-
 func (c Rooms) Index(p int) revel.Result {
-	if p == 0 { p = 1 }
+	if p == 0 {
+		p = 1
+	}
 
 	rooms := model.FindOnePage(p)
 
-    // generate roomlist with recent users
-    var roomLists []*model.RoomList
-    for _, room := range rooms {
-        recentUsers := room.GetRecentUsers() // get []*RecentUser
-        //log.Println("recentUsers is:", recentUsers)
+	// generate roomlist with recent users
+	var roomLists []*model.RoomList
+	for _, room := range rooms {
+		recentUsers := room.GetRecentUsers() // get []*RecentUser
 
-        rl := &model.RoomList{
-            Room: &room,
-            RecentUsers: recentUsers,
-        }
+		rl := &model.RoomList{
+			Id:          room.Id,
+			RoomKey:     room.RoomKey,
+			Title:       room.Title,
+			Private:     room.Private,
+			Description: room.Description,
+			RecentUsers: recentUsers,
+		}
 
-        roomLists = append(roomLists, rl)
-    }
+		log.Println("--- the room in rl is:", rl.RoomKey)
+
+		roomLists = append(roomLists, rl)
+	}
+
+	for _, rooml := range roomLists {
+		log.Println("--- room in roomLists", rooml.RoomKey)
+	}
 
 	allPage := (model.RoomCount() + model.PageSize - 1) / model.PageSize
 
@@ -88,18 +98,18 @@ func (c Rooms) Show(roomkey string) revel.Result {
 		return c.Redirect(Application.Index)
 	}
 
-    currentUser := CurrentUser(c.Controller)
+	currentUser := CurrentUser(c.Controller)
 
 	room := model.FindRoomByRoomKey(roomkey)
 	activeRoom := ChatServer.GetActiveRoom(roomkey)
-    activeRoom.AddUserToRecent(currentUser)
+	activeRoom.AddUserToRecent(currentUser)
 
-    // user list
+	// user list
 	users := activeRoom.UserList()
 
-    // room list 
-    rooms := model.FindRoomByUserId(currentUser.Id)
-    // user avatar
+	// room list 
+	rooms := model.FindRoomByUserId(currentUser.Id)
+	// user avatar
 	userAvatar := currentUser.AvatarUrl()
 
 	return c.Render(room, users, userAvatar, rooms)
@@ -134,7 +144,6 @@ func (c Rooms) Update(roomkey string, updateroom *form.UpdateRoom) revel.Result 
 	c.Flash.Success("update success")
 	return c.Redirect("/r/%s/edit", room.RoomKey)
 }
-
 
 type UserList struct {
 	Users []*chatserver.UserInfo

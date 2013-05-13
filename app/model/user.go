@@ -2,14 +2,14 @@ package model
 
 import (
 	//"github.com/robfig/revel"
-	"webchat/app/form"
-	"crypto/sha1"
 	"crypto/md5"
+	"crypto/sha1"
 	"errors"
-	"strings"
 	"fmt"
 	"math/rand"
+	"strings"
 	"time"
+	"webchat/app/form"
 )
 
 type User struct {
@@ -23,9 +23,9 @@ type User struct {
 	Introduction  string
 	Signature     string
 	// Avatar        string
-	Github        string
-	Created       time.Time
-	Updated       time.Time
+	Github  string
+	Created time.Time
+	Updated time.Time
 }
 
 // generate a User form input form field
@@ -166,4 +166,3 @@ func (u *User) AvatarUrl() string {
 	// return u.Avatar
 	return "http://www.gravatar.com/avatar/" + Hash(u.Email)
 }
-
