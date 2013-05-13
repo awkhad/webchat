@@ -16,10 +16,16 @@ type RoomApi struct {
 }
 
 
-
 // index
 type RoomList struct {
     Room *model.Room
+    RecentUsers []*RecentUser
+}
+
+type RecentUser struct {
+    Id int
+    Avatar string
+    Name string
 }
 
 func (c Rooms) Index(p int) revel.Result {
@@ -80,13 +86,15 @@ func (c Rooms) Show(roomkey string) revel.Result {
 		return c.Redirect(Application.Index)
 	}
 
+    currentUser := CurrentUser(c.Controller)
+
 	room := model.FindRoomByRoomKey(roomkey)
 	activeRoom := ChatServer.GetActiveRoom(roomkey)
+    activeRoom.AddUserToRecent(currentUser)
 
     // user list
 	users := activeRoom.UserList()
 
-    currentUser := CurrentUser(c.Controller)
     // room list 
     rooms := model.FindRoomByUserId(currentUser.Id)
     // user avatar
