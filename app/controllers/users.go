@@ -67,10 +67,6 @@ func (c Users) SaveSettings(setting *form.Settings) revel.Result {
 	return c.Redirect(Users.EditSettings)
 }
 
-func (c Users) Profile() revel.Result {
-	return nil
-}
-
 // func (c Users) Avatar(file []byte) revel.Result {
 // 	if !isLogin(c.Controller) {
 // 		c.Flash.Error("Please login first")
@@ -106,4 +102,11 @@ func (c Users) ChangePasswd(pw *form.PasswordFrom) revel.Result {
 	}
 
 	return c.Redirect(Users.EditSettings)
+}
+
+func (c Users) Show(username string) revel.Result {
+    user := model.FindUserByName(username)
+    avatar := user.AvatarUrl()
+
+	return c.Render(user, avatar)
 }

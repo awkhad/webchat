@@ -30,6 +30,20 @@ func (p tApplication) AddUser(
 }
 
 
+type tRoomApi struct {}
+var RoomApi tRoomApi
+
+
+func (p tRoomApi) Users(
+		roomkey string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "roomkey", roomkey)
+	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
+}
+
+
 type tWebsocket struct {}
 var Websocket tWebsocket
 
@@ -43,20 +57,6 @@ func (p tWebsocket) Chat(
 	revel.Unbind(args, "roomkey", roomkey)
 	revel.Unbind(args, "ws", ws)
 	return revel.MainRouter.Reverse("Websocket.Chat", args).Url
-}
-
-
-type tRoomApi struct {}
-var RoomApi tRoomApi
-
-
-func (p tRoomApi) Users(
-		roomkey string,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "roomkey", roomkey)
-	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
 }
 
 
@@ -190,13 +190,6 @@ func (p tUsers) SaveSettings(
 	return revel.MainRouter.Reverse("Users.SaveSettings", args).Url
 }
 
-func (p tUsers) Profile(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Users.Profile", args).Url
-}
-
 func (p tUsers) ChangePasswd(
 		pw interface{},
 		) string {
@@ -204,6 +197,15 @@ func (p tUsers) ChangePasswd(
 	
 	revel.Unbind(args, "pw", pw)
 	return revel.MainRouter.Reverse("Users.ChangePasswd", args).Url
+}
+
+func (p tUsers) Show(
+		username string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "username", username)
+	return revel.MainRouter.Reverse("Users.Show", args).Url
 }
 
 

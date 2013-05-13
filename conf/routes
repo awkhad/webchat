@@ -11,6 +11,7 @@ GET     /user/sign_up                           Users.New
 GET     /user/edit/settings                     Users.EditSettings
 GET     /user/edit/settings                     Users.EditSettings
 GET     /user/myrooms                           Users.MyRooms
+GET     /user/{username}/profile                Users.Show
 POST    /user/save/settings                     Users.SaveSettings
 POST    /user/sign_up                           Users.Create
 POST    /user/changepasswd                      Users.ChangePasswd
