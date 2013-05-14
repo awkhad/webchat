@@ -2,12 +2,13 @@ package model
 
 import (
 	//"github.com/robfig/revel"
-	"errors"
 	"github.com/hoisie/redis"
-	"log"
-	"strconv"
-	"time"
 	"webchat/app/form"
+	"errors"
+	"strconv"
+    "strings"
+	"time"
+	"log"
 )
 
 const (
@@ -178,3 +179,32 @@ func (r *Room) GetRecentUsers() []*RecentUser {
 
 	return recentusers
 }
+
+// last message from redis
+type LatestMessage struct {
+    Type string
+    UserName string
+    Text string
+    Time string
+}
+
+func (r *Room) LatestMessage() (LM []*LatestMessage) {
+    roomkey := "room:" + r.RoomKey
+    messages, _ := redisClient.Lrange(roomkey, 0, 9)
+
+    for _, m := range messages {
+        ms := strings.Split(string(m), "|")
+
+        latestMessage := &LatestMessage{
+            Type: ms[0],
+            UserName: ms[1],
+            Text: ms[2],
+            Time: ms[3],
+        }
+
+        LM = append(LM, latestMessage)
+    }
+
+    return LM
+}
+

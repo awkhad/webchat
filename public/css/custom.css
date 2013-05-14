@@ -41,7 +41,7 @@ body{
 }
 
 .chat-main {
-    height: 100px;
+    height: auto;
     margin-bottom: 10px;
 }
 

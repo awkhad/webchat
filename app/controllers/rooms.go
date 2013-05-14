@@ -111,8 +111,11 @@ func (c Rooms) Show(roomkey string) revel.Result {
 	rooms := model.FindRoomByUserId(currentUser.Id)
 	// user avatar
 	userAvatar := currentUser.AvatarUrl()
+    // gem latest message 
+    latestMessages := room.LatestMessage()
+    log.Println("latest message len is:", len(latestMessages))
 
-	return c.Render(room, users, userAvatar, rooms)
+	return c.Render(room, users, userAvatar, rooms, latestMessages)
 }
 
 func (c Rooms) Edit(roomkey string) revel.Result {

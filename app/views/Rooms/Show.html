@@ -7,13 +7,18 @@
             <h2>rooms</h2>
             <ul>
                 {{range .rooms}}
-                    <li><a href="/r/{{.RoomKey}}" target="_blank">{{.Title}}</a></li>
+                <li><a href="/r/{{.RoomKey}}" target="_blank">{{.Title}}</a></li>
                 {{end}}
             </ul>
         </div>
 
         <div class="span6 well">
             <div class="chat-main">
+                recent message:
+                {{range .latestMessages}}
+                    {{.Text}} <br />
+                {{end}}
+                new message: <br />
             </div>
 
             <div class="chat-area">
@@ -39,7 +44,7 @@
             <div class="userlist" id="userlist">
                 <ul>
                     {{range .users}}
-                        <li><img src="{{.Avatar}}"/> <span>{{.Name}}</span></li>
+                    <li><img src="{{.Avatar}}"/> <span>{{.Name}}</span></li>
                     {{end}}
                 </ul>
             </div>
