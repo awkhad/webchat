@@ -2,19 +2,20 @@
 
 
 
-## use redis
+## 使用redis存储数据相关结构
 
 * save message to list
 
     key: room:roomkey
-    format: type|username|text
+    format: type|username|text|time
 
-* room recent user save user id to set
+* room 最近用户存储在集合中
 
     room:test:users
 
-* user info 
+* user 信息 Hash
 
-    user:id
+   key 是: user:id
+   value 是: name, avatar, id
 
     

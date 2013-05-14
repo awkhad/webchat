@@ -1,10 +1,10 @@
 package chatserver
 
 import (
-	"container/list"
-	"fmt"
-	"time"
 	"webchat/app/model"
+	"container/list"
+	"time"
+	"fmt"
 )
 
 type Server struct {

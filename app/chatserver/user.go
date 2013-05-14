@@ -2,9 +2,10 @@ package chatserver
 
 import (
 	"code.google.com/p/go.net/websocket"
+	"webchat/app/model"
+    //"strconv"
 	"fmt"
 	"time"
-	"webchat/app/model"
 )
 
 type OnlineUser struct {
@@ -67,10 +68,11 @@ func (u *OnlineUser) PullFromClient() {
 }
 
 func (u *OnlineUser) SaveMessageToRedis(event *Event) {
-	//save to redis list 
+	// save to redis list 
 	// format: "text|lds|asd"  
 	listKey := "room:" + u.Room.RoomKey
-	content := event.Type + "|" + event.User.Name + "|" + event.Text
+    //time := event.Created.Unix()
+	content := event.Type + "|" + event.User.Name + "|" + event.Text + "|" + event.Created.String()
 	redisClient.Lpush(listKey, []byte(content))
 }
 
