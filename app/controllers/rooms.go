@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"github.com/robfig/revel"
-	"log"
 	"webchat/app/chatserver"
 	"webchat/app/form"
 	"webchat/app/model"
+	"log"
 )
 
 type Rooms struct {

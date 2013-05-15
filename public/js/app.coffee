@@ -57,7 +57,7 @@ class Room
         @removeUserFromList(m.User)
 
       console.log m
-      rMessage = new TextMessage(m.Type, m.Text, m.User.Name, m.User.Avatar)
+      rMessage = new TextMessage(m.Type, m.Text, m.User)
       rMessage.show()
 
   getUsersList: ->
@@ -97,9 +97,9 @@ class Message
 
 # deal with text message, show with user
 class TextMessage extends Message
-  constructor: (@type, @text, @user, @avatar) ->
+  constructor: (@type, @text, @user) ->
 
   show: ->
     @autoUrl()
-    $('.chat-main').append @text+"<br>"
+    $('.chat-main').append "<span class='message-avatar'><img src='#{@user.Avatar}'></span>[#{@user.Name}] " + @text + "<br>"
 

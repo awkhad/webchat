@@ -70,7 +70,7 @@
         this.removeUserFromList(m.User);
       }
       console.log(m);
-      rMessage = new TextMessage(m.Type, m.Text, m.User.Name, m.User.Avatar);
+      rMessage = new TextMessage(m.Type, m.Text, m.User);
       return rMessage.show();
     };
 
@@ -133,16 +133,15 @@
   TextMessage = (function(_super) {
     __extends(TextMessage, _super);
 
-    function TextMessage(type, text, user, avatar) {
+    function TextMessage(type, text, user) {
       this.type = type;
       this.text = text;
       this.user = user;
-      this.avatar = avatar;
     }
 
     TextMessage.prototype.show = function() {
       this.autoUrl();
-      return $('.chat-main').append(this.text + "<br>");
+      return $('.chat-main').append(("<span class='message-avatar'><img src='" + this.user.Avatar + "'></span>[" + this.user.Name + "] ") + this.text + "<br>");
     };
 
     return TextMessage;

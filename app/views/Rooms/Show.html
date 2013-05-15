@@ -16,7 +16,7 @@
             <div class="chat-main">
                 recent message:
                 {{range .latestMessages}}
-                    {{.Text}} <br />
+                [{{.UserName}}]:{{.Text}} <br />
                 {{end}}
                 new message: <br />
             </div>
