@@ -9,6 +9,11 @@
                 {{.flash.error}}
             </div>
         {{end}}
+        {{if .flash.success }}
+            <div class="alert alert-success">
+                {{.flash.success}}
+            </div>
+        {{end}}
         <br />
         <form class="form-horizontal" method="post" action="{{url "Sessions.Create"}}" accept-charset="utf-8">
             <div class="control-group">

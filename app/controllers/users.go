@@ -33,7 +33,8 @@ func (c Users) Create(userform *form.UserForm) revel.Result {
 		return c.Redirect(Users.New)
 	}
 
-	return c.Redirect(Application.Index)
+	c.Flash.Success("signup success, please login")
+	return c.Redirect(Sessions.New)
 }
 
 func (c Users) MyRooms() revel.Result {

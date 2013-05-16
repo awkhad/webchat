@@ -33,7 +33,7 @@ func (c Sessions) Create(loginform *form.UserLogin) revel.Result {
 	//create session
 	c.Session["user_name"] = loginform.Name
 	c.Flash.Success("Login success")
-	return c.Redirect(Application.Index)
+	return c.Redirect(Rooms.Index)
 }
 
 func (c Sessions) Destroy() revel.Result {
