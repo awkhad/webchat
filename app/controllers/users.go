@@ -106,8 +106,8 @@ func (c Users) ChangePasswd(pw *form.PasswordFrom) revel.Result {
 }
 
 func (c Users) Show(username string) revel.Result {
-    user := model.FindUserByName(username)
-    avatar := user.AvatarUrl()
+	user := model.FindUserByName(username)
+	avatar := user.AvatarUrl()
 
 	return c.Render(user, avatar)
 }

@@ -17,6 +17,8 @@ POST    /user/sign_up                           Users.Create
 POST    /user/changepasswd                      Users.ChangePasswd
 # POST    /user/avatar                            Users.Avatar
 
+POST    /favorite/room/{roomkey}                Favorite.FavoriteRoom
+
 GET     /rooms                                  Rooms.Index
 GET     /rooms/new                              Rooms.New
 GET     /r/{roomkey}                            Rooms.Show

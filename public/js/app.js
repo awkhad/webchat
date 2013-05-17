@@ -11,7 +11,7 @@
     room.ws_conn.onmessage = function(e) {
       return room.reveiveMessage(e);
     };
-    return $('#sayit-button').click(function() {
+    $('#sayit-button').click(function() {
       var sMessage, text;
 
       text = $('#chat-form').val();
@@ -20,6 +20,15 @@
         return room.sendMessage(sMessage);
       } else {
 
+      }
+    });
+    return $('#chat-form').keydown(function(e) {
+      var sMessage, text;
+
+      if (e.ctrlKey && e.keyCode === 13) {
+        text = $('#chat-form').val();
+        sMessage = new Message("text", text);
+        return room.sendMessage(sMessage);
       }
     });
   });

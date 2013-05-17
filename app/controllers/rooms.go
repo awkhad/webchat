@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"github.com/robfig/revel"
+	"log"
 	"webchat/app/chatserver"
 	"webchat/app/form"
 	"webchat/app/model"
-	"log"
 )
 
 type Rooms struct {
@@ -55,17 +55,16 @@ func (c Rooms) New() revel.Result {
 
 	if !isLogin(c.Controller) {
 		c.Flash.Error("Please login first")
-		return c.Redirect(Application.Index)
+		return c.Redirect(Sessions.New)
 	}
 
 	return c.Render()
 }
 
 func (c Rooms) Create(rf *form.RoomForm) revel.Result {
-
 	if !isLogin(c.Controller) {
 		c.Flash.Error("Please login first")
-		return c.Redirect(Application.Index)
+		return c.Redirect(Sessions.New)
 	}
 
 	rf.UserId = CurrentUser(c.Controller).Id
@@ -95,7 +94,7 @@ func (c Rooms) Create(rf *form.RoomForm) revel.Result {
 func (c Rooms) Show(roomkey string) revel.Result {
 	if !isLogin(c.Controller) {
 		c.Flash.Error("Please login first")
-		return c.Redirect(Application.Index)
+		return c.Redirect(Sessions.New)
 	}
 
 	currentUser := CurrentUser(c.Controller)
@@ -111,9 +110,9 @@ func (c Rooms) Show(roomkey string) revel.Result {
 	rooms := model.FindRoomByUserId(currentUser.Id)
 	// user avatar
 	userAvatar := currentUser.AvatarUrl()
-    // gem latest message 
-    latestMessages := room.LatestMessage()
-    log.Println("latest message len is:", len(latestMessages))
+	// gem latest message 
+	latestMessages := room.LatestMessage()
+	log.Println("latest message len is:", len(latestMessages))
 
 	return c.Render(room, users, userAvatar, rooms, latestMessages)
 }

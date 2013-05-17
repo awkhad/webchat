@@ -17,6 +17,11 @@ $ ->
     else
       return
     
+  $('#chat-form').keydown (e) ->
+    if e.ctrlKey && e.keyCode == 13
+      text = $('#chat-form').val()
+      sMessage = new Message("text", text)
+      room.sendMessage(sMessage)
 
 class Room
   constructor: (ws_url) ->

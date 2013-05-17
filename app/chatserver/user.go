@@ -3,7 +3,7 @@ package chatserver
 import (
 	"code.google.com/p/go.net/websocket"
 	"webchat/app/model"
-    //"strconv"
+	//"strconv"
 	"fmt"
 	"time"
 )
@@ -71,7 +71,7 @@ func (u *OnlineUser) SaveMessageToRedis(event *Event) {
 	// save to redis list 
 	// format: "text|lds|asd"  
 	listKey := "room:" + u.Room.RoomKey
-    //time := event.Created.Unix()
+	//time := event.Created.Unix()
 	content := event.Type + "|" + event.User.Name + "|" + event.Text + "|" + event.Created.String()
 	redisClient.Lpush(listKey, []byte(content))
 }

@@ -5,7 +5,11 @@
         <div class="span3" id="room-{{.Id}}">
             <div class="room">
                 <div class="room-header">
-                    <a href="/r/{{.RoomKey}}">{{.Id}} | {{.Title}} {{if eq .Private true}}<i class="icon-lock"></i> {{end}} </a>
+                    <a href="/r/{{.RoomKey}}">{{.Id}} | {{.Title}}  </a>
+                    <span> {{if eq .Private true}}<i class="icon-lock"></i> {{end}} </span>
+                    <span class="heart"> 
+                        <a href="#" onclick="window.like_room({{.RoomKey}})" class="unstarred">☆</a>
+                    </span>
                 </div>
                 <div class="room-body">
                     {{.Description}}
@@ -41,4 +45,5 @@
         </ul>
     </div>
 </div>
+<script src="/public/js/like.js" type="text/javascript" charset="utf-8"></script>
 {{template "footer.html" .}}
