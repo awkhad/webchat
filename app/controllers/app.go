@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/robfig/revel"
-	//"fmt" 
+	//"fmt"
 )
 
 type Application struct {

@@ -49,7 +49,7 @@ func (r *ActiveRoom) JoinUser(user *OnlineUser) {
 }
 
 func (r *ActiveRoom) RemoveUser(u *OnlineUser) {
-	// remove user form rooms's users list 
+	// remove user form rooms's users list
 	for e := r.Users.Front(); e != nil; e = e.Next() {
 		user := e.Value.(*OnlineUser)
 		if user.Id == u.Id && user.Connection == u.Connection {

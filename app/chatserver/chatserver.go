@@ -48,7 +48,7 @@ func (s *Server) GetActiveRoom(roomkey string) *ActiveRoom {
 	return activeroom
 }
 
-// init all room 
+// init all room
 func (s *Server) RunRooms() {
 	rooms := model.AllRoom()
 

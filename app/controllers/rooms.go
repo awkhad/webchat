@@ -107,11 +107,11 @@ func (c Rooms) Show(roomkey string) revel.Result {
 	// user list
 	users := activeRoom.UserList()
 
-	// room list 
+	// room list
 	rooms := model.FindRoomByUserId(currentUser.Id)
 	// user avatar
 	userAvatar := currentUser.AvatarUrl()
-	// gem latest message 
+	// gem latest message
 	latestMessages := room.LatestMessage()
 	log.Println("latest message len is:", len(latestMessages))
 
@@ -148,10 +148,9 @@ func (c Rooms) Update(roomkey string, updateroom *form.UpdateRoom) revel.Result 
 	return c.Redirect("/r/%s/edit", room.RoomKey)
 }
 
-
 func (c Rooms) Logs(roomkey string) revel.Result {
-	// get all redis from 
-    logs := model.AllMessageFromRedis(roomkey)
+	// get all redis from
+	logs := model.AllMessageFromRedis(roomkey)
 
 	return c.Render(logs)
 }
@@ -162,7 +161,7 @@ type UserList struct {
 
 func (c RoomApi) Users(roomkey string) revel.Result {
 
-	// get a activeRoom and get room's user list 
+	// get a activeRoom and get room's user list
 	activeroom := ChatServer.GetActiveRoom(roomkey)
 	users := activeroom.UserList()
 

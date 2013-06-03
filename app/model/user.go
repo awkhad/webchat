@@ -98,14 +98,14 @@ func Authenticate(name string, password string) bool {
 	return false
 }
 
-// for generate rand salt 
+// for generate rand salt
 func generate_salt() string {
 	rand.Seed(time.Now().UnixNano())
 	salt := fmt.Sprintf("%x", rand.Int31())
 	return salt
 }
 
-// for enrypt password 
+// for enrypt password
 func encryptPassword(password, salt string) string {
 	h := sha1.New()
 	h.Write([]byte(password + salt))

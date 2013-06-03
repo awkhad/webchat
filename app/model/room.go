@@ -164,7 +164,7 @@ func (r *Room) GetRecentUsers() []*RecentUser {
 			userid, _ := strconv.Atoi(user["id"])
 
 			ru := &RecentUser{
-				Id:     userid, //to int 
+				Id:     userid, //to int
 				Avatar: user["avatar"],
 				Name:   user["name"],
 			}
@@ -188,14 +188,14 @@ type LatestMessage struct {
 	Time     string
 }
 
-func AllMessageFromRedis(roomkey string) (LM []*LatestMessage){
-    LM = GetMessageFromRedis(roomkey, 0, -1)
-    return
+func AllMessageFromRedis(roomkey string) (LM []*LatestMessage) {
+	LM = GetMessageFromRedis(roomkey, 0, -1)
+	return
 }
 
 func (r *Room) LatestMessage() (LM []*LatestMessage) {
-    LM = GetMessageFromRedis(r.RoomKey, 0, 9)
-    return
+	LM = GetMessageFromRedis(r.RoomKey, 0, 9)
+	return
 }
 
 func GetMessageFromRedis(roomkey string, start int, end int) (LM []*LatestMessage) {
@@ -218,4 +218,3 @@ func GetMessageFromRedis(roomkey string, start int, end int) (LM []*LatestMessag
 	return LM
 
 }
-
