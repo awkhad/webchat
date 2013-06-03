@@ -188,9 +188,19 @@ type LatestMessage struct {
 	Time     string
 }
 
+func AllMessageFromRedis(roomkey string) (LM []*LatestMessage){
+    LM = GetMessageFromRedis(roomkey, 0, -1)
+    return
+}
+
 func (r *Room) LatestMessage() (LM []*LatestMessage) {
-	roomkey := "room:" + r.RoomKey
-	messages, _ := redisClient.Lrange(roomkey, 0, 9)
+    LM = GetMessageFromRedis(r.RoomKey, 0, 9)
+    return
+}
+
+func GetMessageFromRedis(roomkey string, start int, end int) (LM []*LatestMessage) {
+	key := "room:" + roomkey
+	messages, _ := redisClient.Lrange(key, start, end)
 
 	for _, m := range messages {
 		ms := strings.Split(string(m), "|")
@@ -206,4 +216,6 @@ func (r *Room) LatestMessage() (LM []*LatestMessage) {
 	}
 
 	return LM
+
 }
+

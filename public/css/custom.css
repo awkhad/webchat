@@ -98,16 +98,16 @@ body{
     width: 15px;
 }
 
-::-webkit-scrollbar { 
+.container-fluid ::-webkit-scrollbar { 
     width: 3px; 
     height: 3px;
 }   
 
-::-webkit-scrollbar-track-piece {
+.container-fluid ::-webkit-scrollbar-track-piece {
     background-color: #fff;
 }
 
-::-webkit-scrollbar-thumb{
+.container-fluid ::-webkit-scrollbar-thumb{
     height: 30px;
     background-color: #08c;
     -webkit-border-radius: 4px;

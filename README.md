@@ -15,6 +15,7 @@
 	# goalng package needs 
 	go get github.com/astaxie/beedb
 	go get github.com/go-sql-driver/mysql
+    go get github.com/hoise/redis
 
 	
 
