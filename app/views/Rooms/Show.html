@@ -18,6 +18,8 @@
                 {{range .latestMessages}}
                 [{{.UserName}}] {{.Text}} <br />
                 {{end}}
+                <a href="/r/{{.room.RoomKey}}/logs">more logs ...</a>
+                <br>
                 new message: <br />
             </div>
 

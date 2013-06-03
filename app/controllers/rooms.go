@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/robfig/revel"
 	"log"
+	"time"
 	"webchat/app/chatserver"
 	"webchat/app/form"
 	"webchat/app/model"
@@ -147,6 +148,24 @@ func (c Rooms) Update(roomkey string, updateroom *form.UpdateRoom) revel.Result 
 	return c.Redirect("/r/%s/edit", room.RoomKey)
 }
 
+// get logs from redis server
+type struct log {
+	Type 		string
+	UserName string 
+	Text	 string
+	Time time.Time
+}
+
+func (c Rooms) Logs(roomkey string) revel.Result {
+	
+
+	var logs []*log
+
+	// get all redis from 
+
+	return c.Render(logs)
+}
+ 
 type UserList struct {
 	Users []*chatserver.UserInfo
 }
