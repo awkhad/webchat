@@ -6,11 +6,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="/">websocet</a>
+            <a class="brand" href="/">websocet chat</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li><a href="/" class="section">Home</a></li>
                     <li><a href="/rooms" class="section">Rooms</a></li>
+                    {{if .user}}
+                        {{if eq .user.Email "ldshuang@gmail.com"}}
+                            <li><a href="/admin" class="section">Admin</a></li>
+                        {{end}}
+                    {{end}}
                 </ul>
                 <ul class="nav pull-right">
                     <li><a href="/rooms/new" class="section">Create Room</a></li>

@@ -52,76 +52,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{range .latestUsers}}
                                     <tr>
                                         <td class="w50">
-                                            142
+                                            {{.Id}}
                                         </td>
                                         <td class="auto">
-                                            tutor
+                                            {{.Name}}
                                         </td>
                                         <td class="auto">
-                                            longfuweiwu@yeah.net
+                                            {{.Email}}
                                         </td>
                                         <td class="w100">
-                                            <small class="gray">一天前</small>
+                                            <small class="gray">{{.Created}}</small>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="w50">
-                                            141
-                                        </td>
-                                        <td class="auto">
-                                            000
-                                        </td>
-                                        <td class="auto">
-                                            1377851971@qq.com
-                                        </td>
-                                        <td class="w100">
-                                            <small class="gray">7 天前</small>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w50">
-                                            140
-                                        </td>
-                                        <td class="auto">
-                                            qinyg
-                                        </td>
-                                        <td class="auto">
-                                            qin1174586290@gmail.com
-                                        </td>
-                                        <td class="w100">
-                                            <small class="gray">11 天前</small>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w50">
-                                            139
-                                        </td>
-                                        <td class="auto">
-                                            少林小和尚
-                                        </td>
-                                        <td class="auto">
-                                            1726140433@qq.com
-                                        </td>
-                                        <td class="w100">
-                                            <small class="gray">24 天前</small>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w50">
-                                            138
-                                        </td>
-                                        <td class="auto">
-                                            cpy
-                                        </td>
-                                        <td class="auto">
-                                            xw_cht.y@live.cn
-                                        </td>
-                                        <td class="w100">
-                                            <small class="gray">27 天前</small>
-                                        </td>
-                                    </tr>
+                                    {{end}}
                                 </tbody>
                             </table>
                         </div>
@@ -130,32 +76,25 @@
                 <div class="row">
                     <div class="box span4">
                         <div class="cell">
-                            社区运行状态
+                            运行状态
                         </div>
                         <div class="inner">
                             <table border="0" cellpadding="3" cellspacing="0" width="100%">
-                                <tbody><tr>
+                                <tbody>
+                                    <tr>
                                         <td align="right" width="40%">
-                                            <span class="gray">注册会员总数</span>
+                                            <span class="gray">频道总数</span>
                                         </td>
                                         <td align="left">
-                                            <strong>142</strong>
+                                            <strong>{{.roomCount}}</strong>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td align="right" width="40%">
-                                            <span class="gray">主题总数</span>
+                                            <span class="gray">在线用户数</span>
                                         </td>
                                         <td align="left">
-                                            <strong>742</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right" width="40%">
-                                            <span class="gray">回复总数</span>
-                                        </td>
-                                        <td align="left">
-                                            <strong>2174</strong>
+                                            <strong>{{.onlineUserCount}}</strong>
                                         </td>
                                     </tr>
                             </tbody></table>
@@ -163,17 +102,16 @@
                     </div>
                     <div class="box span4">
                         <div class="cell">
-                            系统清理
+                            在线用户数
                         </div>
                         <div class="inner">
                             <table class="table table-bordered">
                                 <tbody><tr>
-                                        <td align="right" width="40%">
-                                            <span class="gray">可清理提醒</span>
+                                        <td align="left">
+                                        注册会员总数
                                         </td>
                                         <td align="left">
-                                            <div class="pull-right"><a href="/admin/notifications/clear" class="btn btn-mini btn-info" data-method="delete" rel="nofollow">删除已读提醒</a></div>
-                                            <strong>1</strong>
+                                            <strong>{{.userCount}}</strong>
                                         </td>
                                     </tr>
                             </tbody></table>

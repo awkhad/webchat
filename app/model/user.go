@@ -166,3 +166,22 @@ func (u *User) AvatarUrl() string {
 	// return u.Avatar
 	return "http://www.gravatar.com/avatar/" + Hash(u.Email)
 }
+
+func LatestUsers(count int) (users []User) {
+	db := GetDblink()
+	db.Limit(count).FindAll(&users)
+	return
+}
+
+func UserCount() int {
+	db := GetDblink()
+	var itemCount int
+
+	err := db.Db.QueryRow("select count(*) as count from user").Scan(&itemCount)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return itemCount
+}
