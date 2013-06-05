@@ -29,6 +29,9 @@ WS      /r/{roomkey}/chatting                   Websocket.Chat
 
 Get 	/r/{roomkey}/logs 						Rooms.Logs
 
+# admin
+Get     /admin                                  Admin.Index
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

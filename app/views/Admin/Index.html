@@ -1,0 +1,189 @@
+{{set . "title" "admin"}}
+{{template "header.html" .}}
+<div id="wrap">
+    <div class="container" id="page-main">
+        <div class="row">
+            <div class="span2">
+                <div class="box fix_cell">
+                    <div class="cell">
+                        <strong class="gray">社区管理</strong>
+                    </div>
+                    <div class="cell">
+                        <img align="absmiddle" alt="Dashboard" src="/public/images/dashboard.png" valign="middle">
+                        &nbsp;
+                        <a href="/admin" class="current_item">运行状态</a>
+                    </div>
+                    <div class="cell">
+                        <img align="absmiddle" alt="Settings" src="/public/images/settings.png" valign="middle">
+                        &nbsp;
+                        <a href="/admin/site_settings">基本设置</a>
+                    </div>
+                    <div class="cell">
+                        <img align="absmiddle" alt="Users" src="/public/images/users.png" valign="middle">
+                        &nbsp;
+                        <a href="/admin/users">用户</a>
+                    </div>
+                    <div class="cell">
+                        <img align="absmiddle" alt="Nodes" src="/public/images/nodes.png" valign="middle">
+                        &nbsp;
+                        <a href="/admin/planes">位面节点</a>
+                    </div>
+                    <div class="cell">
+                        <img align="absmiddle" alt="Pages" src="/public/images/pages.png" valign="middle">
+                        &nbsp;
+                        <a href="/admin/pages">页面</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="span8">
+
+                <div class="row">
+                    <div class="box span8">
+                        <div class="cell"> 最新用户 </div>
+                        <div class="inner">
+                            <table class="topics table">
+                                <thead>
+                                    <tr>
+                                        <th class="w50">ID</th>
+                                        <th align="left" class="auto">用户名</th>
+                                        <th align="left" class="auto">Email</th>
+                                        <th class="w100">注册时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="w50">
+                                            142
+                                        </td>
+                                        <td class="auto">
+                                            tutor
+                                        </td>
+                                        <td class="auto">
+                                            longfuweiwu@yeah.net
+                                        </td>
+                                        <td class="w100">
+                                            <small class="gray">一天前</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w50">
+                                            141
+                                        </td>
+                                        <td class="auto">
+                                            000
+                                        </td>
+                                        <td class="auto">
+                                            1377851971@qq.com
+                                        </td>
+                                        <td class="w100">
+                                            <small class="gray">7 天前</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w50">
+                                            140
+                                        </td>
+                                        <td class="auto">
+                                            qinyg
+                                        </td>
+                                        <td class="auto">
+                                            qin1174586290@gmail.com
+                                        </td>
+                                        <td class="w100">
+                                            <small class="gray">11 天前</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w50">
+                                            139
+                                        </td>
+                                        <td class="auto">
+                                            少林小和尚
+                                        </td>
+                                        <td class="auto">
+                                            1726140433@qq.com
+                                        </td>
+                                        <td class="w100">
+                                            <small class="gray">24 天前</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w50">
+                                            138
+                                        </td>
+                                        <td class="auto">
+                                            cpy
+                                        </td>
+                                        <td class="auto">
+                                            xw_cht.y@live.cn
+                                        </td>
+                                        <td class="w100">
+                                            <small class="gray">27 天前</small>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box span4">
+                        <div class="cell">
+                            社区运行状态
+                        </div>
+                        <div class="inner">
+                            <table border="0" cellpadding="3" cellspacing="0" width="100%">
+                                <tbody><tr>
+                                        <td align="right" width="40%">
+                                            <span class="gray">注册会员总数</span>
+                                        </td>
+                                        <td align="left">
+                                            <strong>142</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" width="40%">
+                                            <span class="gray">主题总数</span>
+                                        </td>
+                                        <td align="left">
+                                            <strong>742</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" width="40%">
+                                            <span class="gray">回复总数</span>
+                                        </td>
+                                        <td align="left">
+                                            <strong>2174</strong>
+                                        </td>
+                                    </tr>
+                            </tbody></table>
+                        </div>
+                    </div>
+                    <div class="box span4">
+                        <div class="cell">
+                            系统清理
+                        </div>
+                        <div class="inner">
+                            <table class="table table-bordered">
+                                <tbody><tr>
+                                        <td align="right" width="40%">
+                                            <span class="gray">可清理提醒</span>
+                                        </td>
+                                        <td align="left">
+                                            <div class="pull-right"><a href="/admin/notifications/clear" class="btn btn-mini btn-info" data-method="delete" rel="nofollow">删除已读提醒</a></div>
+                                            <strong>1</strong>
+                                        </td>
+                                    </tr>
+                            </tbody></table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{{template "footer.html" .}}
