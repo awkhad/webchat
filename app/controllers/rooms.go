@@ -38,14 +38,14 @@ func (c Rooms) Index(p int) revel.Result {
 			RecentUsers: recentUsers,
 		}
 
-		log.Println("--- the room in rl is:", rl.RoomKey)
+		//log.Println("--- the room in rl is:", rl.RoomKey)
 
 		roomLists = append(roomLists, rl)
 	}
 
-	for _, rooml := range roomLists {
-		log.Println("--- room in roomLists", rooml.RoomKey)
-	}
+	//	for _, rooml := range roomLists {
+	//		log.Println("--- room in roomLists", rooml.RoomKey)
+	//	}
 
 	allPage := (model.RoomCount() + model.PageSize - 1) / model.PageSize
 
@@ -103,6 +103,7 @@ func (c Rooms) Show(roomkey string) revel.Result {
 	room := model.FindRoomByRoomKey(roomkey)
 	activeRoom := ChatServer.GetActiveRoom(roomkey)
 	activeRoom.AddUserToRecent(currentUser)
+	log.Println(currentUser.Email)
 
 	// user list
 	users := activeRoom.UserList()

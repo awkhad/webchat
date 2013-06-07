@@ -28,6 +28,37 @@ func (c Admin) Index() revel.Result {
 	return c.Render(roomCount, onlineUserCount, latestUsers, userCount)
 }
 
+func (c Admin) Users() revel.Result {
+	if !isLogin(c.Controller) {
+		c.Flash.Error("Please login first")
+		return c.Redirect(Application.Index)
+	}
+
+	if !c.checkAdmin() {
+		c.Flash.Error("required admin")
+		return c.Redirect(Application.Index)
+	}
+
+	users := model.AllUsers()
+	return c.Render(users)
+}
+
+func (c Admin) Rooms() revel.Result {
+	if !isLogin(c.Controller) {
+		c.Flash.Error("Please login first")
+		return c.Redirect(Application.Index)
+	}
+
+	if !c.checkAdmin() {
+		c.Flash.Error("required admin")
+		return c.Redirect(Application.Index)
+	}
+
+	rooms := model.AllRoom()
+	return c.Render(rooms)
+
+}
+
 func (c Admin) checkAdmin() bool {
 	user := model.FindUserByName(c.Session["user_name"])
 	if user.Email == "ldshuang@gmail.com" {

@@ -6,6 +6,7 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"log"
 	"math/rand"
 	"strings"
 	"time"
@@ -164,12 +165,19 @@ func (u *User) AvatarUrl() string {
 	// }
 
 	// return u.Avatar
+	log.Println(u.Email)
 	return "http://www.gravatar.com/avatar/" + Hash(u.Email)
 }
 
 func LatestUsers(count int) (users []User) {
 	db := GetDblink()
 	db.Limit(count).FindAll(&users)
+	return
+}
+
+func AllUsers() (users []User) {
+	db := GetDblink()
+	db.FindAll(&users)
 	return
 }
 

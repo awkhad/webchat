@@ -1,0 +1,48 @@
+{{set . "title" "admin"}}
+{{template "header.html" .}}
+<div id="wrap">
+    <div class="container" id="page-main">
+        <div class="row">
+            {{template "share/admin_navbar.html" .}}
+            <div class="span8">
+                <div class="row">
+                    <div class="box span8">
+                        <div class="cell"> 所有频道 </div>
+                        <div class="inner">
+                            <table class="topics table">
+                                <thead>
+                                    <tr>
+                                        <th class="w50">ID</th>
+                                        <th align="left" class="auto">标识</th>
+                                        <th align="left" class="auto">标题</th>
+                                        <th class="w100">创建</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{range .rooms}}
+                                    <tr>
+                                        <td class="w50">
+                                            {{.Id}}
+                                        </td>
+                                        <td class="auto">
+                                            <a href="/r/{{.RoomKey}}">{{.RoomKey}}</a>
+                                        </td>
+                                        <td class="auto">
+                                            {{.Title}}
+                                        </td>
+                                        <td class="w100">
+                                            <small class="gray">{{.CreatedAt}}</small>
+                                        </td>
+                                    </tr>
+                                    {{end}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{template "footer.html" .}}

@@ -3,15 +3,22 @@ package routes
 
 import "github.com/robfig/revel"
 
+type tRoomApi struct{}
+
+var RoomApi tRoomApi
+
+func (p tRoomApi) Users(
+	roomkey string,
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "roomkey", roomkey)
+	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
+}
+
 type tApplication struct{}
 
 var Application tApplication
-
-func (p tApplication) Index() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("Application.Index", args).Url
-}
 
 func (p tApplication) CheckUser() string {
 	args := make(map[string]string)
@@ -25,17 +32,10 @@ func (p tApplication) AddUser() string {
 	return revel.MainRouter.Reverse("Application.AddUser", args).Url
 }
 
-type tRoomApi struct{}
-
-var RoomApi tRoomApi
-
-func (p tRoomApi) Users(
-	roomkey string,
-) string {
+func (p tApplication) Index() string {
 	args := make(map[string]string)
 
-	revel.Unbind(args, "roomkey", roomkey)
-	return revel.MainRouter.Reverse("RoomApi.Users", args).Url
+	return revel.MainRouter.Reverse("Application.Index", args).Url
 }
 
 type tWebsocket struct{}
@@ -51,33 +51,6 @@ func (p tWebsocket) Chat(
 	revel.Unbind(args, "roomkey", roomkey)
 	revel.Unbind(args, "ws", ws)
 	return revel.MainRouter.Reverse("Websocket.Chat", args).Url
-}
-
-type tTestRunner struct{}
-
-var TestRunner tTestRunner
-
-func (p tTestRunner) Index() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("TestRunner.Index", args).Url
-}
-
-func (p tTestRunner) Run(
-	suite string,
-	test string,
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "suite", suite)
-	revel.Unbind(args, "test", test)
-	return revel.MainRouter.Reverse("TestRunner.Run", args).Url
-}
-
-func (p tTestRunner) List() string {
-	args := make(map[string]string)
-
-	return revel.MainRouter.Reverse("TestRunner.List", args).Url
 }
 
 type tStatic struct{}
@@ -108,14 +81,31 @@ func (p tStatic) ServeModule(
 	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
 }
 
-type tAdmin struct{}
+type tTestRunner struct{}
 
-var Admin tAdmin
+var TestRunner tTestRunner
 
-func (p tAdmin) Index() string {
+func (p tTestRunner) Index() string {
 	args := make(map[string]string)
 
-	return revel.MainRouter.Reverse("Admin.Index", args).Url
+	return revel.MainRouter.Reverse("TestRunner.Index", args).Url
+}
+
+func (p tTestRunner) Run(
+	suite string,
+	test string,
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "suite", suite)
+	revel.Unbind(args, "test", test)
+	return revel.MainRouter.Reverse("TestRunner.Run", args).Url
+}
+
+func (p tTestRunner) List() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("TestRunner.List", args).Url
 }
 
 type tUsers struct{}
@@ -176,6 +166,21 @@ func (p tUsers) Show(
 	return revel.MainRouter.Reverse("Users.Show", args).Url
 }
 
+type tFavorite struct{}
+
+var Favorite tFavorite
+
+func (p tFavorite) FavoriteRoom(
+	roomkey string,
+	like bool,
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "roomkey", roomkey)
+	revel.Unbind(args, "like", like)
+	return revel.MainRouter.Reverse("Favorite.FavoriteRoom", args).Url
+}
+
 type tSessions struct{}
 
 var Sessions tSessions
@@ -199,6 +204,28 @@ func (p tSessions) Destroy() string {
 	args := make(map[string]string)
 
 	return revel.MainRouter.Reverse("Sessions.Destroy", args).Url
+}
+
+type tAdmin struct{}
+
+var Admin tAdmin
+
+func (p tAdmin) Index() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Admin.Index", args).Url
+}
+
+func (p tAdmin) Users() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Admin.Users", args).Url
+}
+
+func (p tAdmin) Rooms() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("Admin.Rooms", args).Url
 }
 
 type tRooms struct{}
@@ -265,19 +292,4 @@ func (p tRooms) Logs(
 
 	revel.Unbind(args, "roomkey", roomkey)
 	return revel.MainRouter.Reverse("Rooms.Logs", args).Url
-}
-
-type tFavorite struct{}
-
-var Favorite tFavorite
-
-func (p tFavorite) FavoriteRoom(
-	roomkey string,
-	like bool,
-) string {
-	args := make(map[string]string)
-
-	revel.Unbind(args, "roomkey", roomkey)
-	revel.Unbind(args, "like", like)
-	return revel.MainRouter.Reverse("Favorite.FavoriteRoom", args).Url
 }

@@ -153,10 +153,18 @@ type RecentUser struct {
 
 func (r *Room) GetRecentUsers() []*RecentUser {
 	userIds, _ := redisClient.Smembers("room:" + r.RoomKey + ":users")
+
+	if r.RoomKey == "aaa" {
+		log.Println(len(userIds))
+	}
 	var recentusers []*RecentUser
 
 	for _, id := range userIds {
-		key := "user:" + string(id[0])
+		key := "user:" + string(id)
+		if r.RoomKey == "aaa" {
+			log.Println(key)
+		}
+
 		user := make(map[string]string)
 		err := redisClient.Hgetall(key, user)
 
