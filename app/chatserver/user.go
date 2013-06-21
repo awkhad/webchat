@@ -58,15 +58,34 @@ func (u *OnlineUser) PullFromClient() {
 
 		event.Created = time.Now()
 		event.User = u.Info
+		u.HandleMessage(&event)
+	}
+}
 
+func (u *OnlineUser) HandleMessage(event *Event) {
+	if checkCmd(event.Text) {
+		u.ProcessCmd(event.Text)
+	} else {
 		if u.Room.Status {
-			u.Room.Broadcast <- &event
+			u.Room.Broadcast <- event
 		}
-
 		if u.Room.SaveLogs && u.Room.Status {
-			u.SaveMessageToRedis(&event)
+			u.SaveMessageToRedis(event)
 		}
 	}
+}
+
+func (u *OnlineUser) ProcessCmd(Text string) {
+	resultText := u.cmdResult(Text)
+
+	var event *Event = &Event{
+		Type:    "cmd",
+		Text:    resultText,
+		Created: time.Now(),
+		User:    u.Info,
+	}
+
+	u.Send <- event
 }
 
 func (u *OnlineUser) SaveMessageToRedis(event *Event) {

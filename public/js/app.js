@@ -135,6 +135,11 @@
       return this;
     };
 
+    Message.prototype.textWrap = function() {
+      this.text = this.text.replace(/\n/g, "<br />");
+      return this;
+    };
+
     return Message;
 
   })();
@@ -150,6 +155,7 @@
 
     TextMessage.prototype.show = function() {
       this.autoUrl();
+      this.textWrap();
       return $('.chat-main').append(("<span class='message-avatar'><img src='" + this.user.Avatar + "'></span>[" + this.user.Name + "] ") + this.text + "<br>");
     };
 

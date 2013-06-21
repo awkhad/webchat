@@ -99,6 +99,10 @@ class Message
     url = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
     @text = @text.replace(url, "<a href=\"$1\" target='_blank'>$1</a>")
     return @
+  
+  textWrap: ->
+    @text = @text.replace(/\n/g, "<br />")
+    return @
 
 # deal with text message, show with user
 class TextMessage extends Message
@@ -106,5 +110,6 @@ class TextMessage extends Message
 
   show: ->
     @autoUrl()
+    @textWrap()
     $('.chat-main').append "<span class='message-avatar'><img src='#{@user.Avatar}'></span>[#{@user.Name}] " + @text + "<br>"
 
