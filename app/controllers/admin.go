@@ -134,6 +134,13 @@ func (c Admin) SaveServerSettings(sf *form.ServerSettings) revel.Result {
 	return c.Redirect(Admin.SiteSettings)
 }
 
+func (c Admin) OnlineUsers(roomKey string) revel.Result {
+	room := ChatServer.GetActiveRoom(roomKey)
+	users := room.UserList()
+
+	return c.Render(users)
+}
+
 func (c Admin) checkAdmin() bool {
 	user := model.FindUserByName(c.Session["user_name"])
 	if user.Email == "ldshuang@gmail.com" {

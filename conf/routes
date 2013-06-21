@@ -37,6 +37,7 @@ Get     /admin/users                            Admin.Users
 Get     /admin/rooms                            Admin.Rooms
 Get     /admin/{roomKey}/changelog              Admin.ChangeLogStatus
 Get     /admin/{roomKey}/status                 Admin.ChangeRunStatus 
+Get     /admin/{roomKey}/onlineUsers            Admin.OnlineUsers()
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -124,7 +124,12 @@ body{
     padding: 10px;
     border-bottom: 1px solid #F0F0F0;
 }
+
 #wrap {
     background-color: #E0E0E0;
     padding-top: 20px;
+}
+
+.avatar-list {
+    height: 23px;
 }
