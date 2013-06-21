@@ -31,9 +31,12 @@ Get 	/r/{roomkey}/logs 						Rooms.Logs
 
 # admin
 Get     /admin                                  Admin.Index
+Get     /admin/site_settings                    Admin.SiteSettings
+POST    /admin/save_settings                    Admin.SaveServerSettings
 Get     /admin/users                            Admin.Users
 Get     /admin/rooms                            Admin.Rooms
 Get     /admin/{roomKey}/changelog              Admin.ChangeLogStatus
+Get     /admin/{roomKey}/status                 Admin.ChangeRunStatus 
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

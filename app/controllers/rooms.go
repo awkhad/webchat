@@ -43,17 +43,12 @@ func (c Rooms) Index(p int) revel.Result {
 		roomLists = append(roomLists, rl)
 	}
 
-	//	for _, rooml := range roomLists {
-	//		log.Println("--- room in roomLists", rooml.RoomKey)
-	//	}
-
 	allPage := (model.RoomCount() + model.PageSize - 1) / model.PageSize
 
 	return c.Render(p, allPage, roomLists)
 }
 
 func (c Rooms) New() revel.Result {
-
 	if !isLogin(c.Controller) {
 		c.Flash.Error("Please login first")
 		return c.Redirect(Sessions.New)
@@ -77,6 +72,7 @@ func (c Rooms) Create(rf *form.RoomForm) revel.Result {
 		c.FlashParams()
 		return c.Redirect(Rooms.New)
 	}
+
 	room := model.NewRoom(rf)
 
 	if _, err := room.Save(); err != nil {

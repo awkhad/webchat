@@ -4,7 +4,7 @@ import (
 	"code.google.com/p/go.net/websocket"
 	"webchat/app/model"
 	//"strconv"
-	"fmt"
+	"log"
 	"time"
 )
 
@@ -51,21 +51,21 @@ func (u *OnlineUser) PushToClient() {
 func (u *OnlineUser) PullFromClient() {
 	for {
 		var event Event
-		err := websocket.JSON.Receive(u.Connection, &event)
-		event.Created = time.Now()
-		event.User = u.Info
-		fmt.Println("the message is:", event)
-
-		// user close
-		if err != nil {
-			fmt.Println("Receive occur some error", err.Error())
+		if err := websocket.JSON.Receive(u.Connection, &event); err != nil {
+			log.Println("Receive occur some error", err.Error())
 			return
 		}
 
-		u.Room.Broadcast <- &event
-        if u.Room.SaveLogs {
-		    u.SaveMessageToRedis(&event)
-        }
+		event.Created = time.Now()
+		event.User = u.Info
+
+		if u.Room.Status {
+			u.Room.Broadcast <- &event
+		}
+
+		if u.Room.SaveLogs && u.Room.Status {
+			u.SaveMessageToRedis(&event)
+		}
 	}
 }
 
@@ -82,7 +82,7 @@ func (u *OnlineUser) Close() {
 	// clear resource when user conn close
 	// close conn
 	if err := u.Connection.Close(); err != nil {
-		fmt.Println("close conn faild")
+		log.Println("close conn faild")
 	}
 
 	// close channel

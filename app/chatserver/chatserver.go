@@ -50,12 +50,12 @@ func (s *Server) GetActiveRoom(roomkey string) *ActiveRoom {
 
 // Get all run rooms
 func (s *Server) AllRunRooms() []*ActiveRoom {
-    var rooms []*ActiveRoom
+	var rooms []*ActiveRoom
 	for room := s.ActiveRooms.Front(); room != nil; room = room.Next() {
 		r := room.Value.(*ActiveRoom)
-        rooms = append(rooms, r)
+		rooms = append(rooms, r)
 	}
-    return rooms
+	return rooms
 }
 
 // init all room

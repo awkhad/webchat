@@ -24,7 +24,11 @@
                                             <a href="/r/{{.RoomKey}}">{{.RoomKey}}</a>
                                         </td>
                                         <td class="auto">
-                                            "test"
+                                            {{if .Status}} 
+                                                <a href="/admin/{{.RoomKey}}/status"> ON </a>
+                                            {{else}} 
+                                                <a href="/admin/{{.RoomKey}}/status"> OFF </a>
+                                            {{end}}
                                         </td>
                                         <td class="w100">
                                             <small class="gray">
