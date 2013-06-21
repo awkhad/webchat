@@ -11,6 +11,7 @@ import (
 type ActiveRoom struct {
 	RoomKey   string
 	Users     *list.List
+    SaveLogs     bool
 	Broadcast chan *Event
 }
 
@@ -18,6 +19,7 @@ func NewActiveRoom(rk string) *ActiveRoom {
 	activeRoom := &ActiveRoom{
 		RoomKey:   rk,
 		Users:     list.New(),
+        SaveLogs:   true,
 		Broadcast: make(chan *Event),
 	}
 	return activeRoom

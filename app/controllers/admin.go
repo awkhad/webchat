@@ -54,9 +54,25 @@ func (c Admin) Rooms() revel.Result {
 		return c.Redirect(Application.Index)
 	}
 
-	rooms := model.AllRoom()
+	rooms := ChatServer.AllRunRooms()
 	return c.Render(rooms)
 
+}
+
+func (c Admin) ChangeLogStatus(roomKey string) revel.Result {
+	if !isLogin(c.Controller) {
+		c.Flash.Error("Please login first")
+		return c.Redirect(Application.Index)
+	}
+
+	if !c.checkAdmin() {
+		c.Flash.Error("required admin")
+		return c.Redirect(Application.Index)
+	}
+
+    room := ChatServer.GetActiveRoom(roomKey)
+    room.SaveLogs = !room.SaveLogs
+    return c.Redirect(Admin.Rooms)
 }
 
 func (c Admin) checkAdmin() bool {
@@ -67,3 +83,4 @@ func (c Admin) checkAdmin() bool {
 		return false
 	}
 }
+

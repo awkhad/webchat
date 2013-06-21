@@ -63,7 +63,9 @@ func (u *OnlineUser) PullFromClient() {
 		}
 
 		u.Room.Broadcast <- &event
-		u.SaveMessageToRedis(&event)
+        if u.Room.SaveLogs {
+		    u.SaveMessageToRedis(&event)
+        }
 	}
 }
 

@@ -48,12 +48,21 @@ func (s *Server) GetActiveRoom(roomkey string) *ActiveRoom {
 	return activeroom
 }
 
+// Get all run rooms
+func (s *Server) AllRunRooms() []*ActiveRoom {
+    var rooms []*ActiveRoom
+	for room := s.ActiveRooms.Front(); room != nil; room = room.Next() {
+		r := room.Value.(*ActiveRoom)
+        rooms = append(rooms, r)
+	}
+    return rooms
+}
+
 // init all room
 func (s *Server) RunRooms() {
 	rooms := model.AllRoom()
 
 	for _, room := range rooms {
-		fmt.Println(room)
 		activeroom := NewActiveRoom(room.RoomKey)
 		// run room in a goroutine and push room to list
 		go activeroom.Run()

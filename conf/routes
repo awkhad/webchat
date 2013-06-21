@@ -33,6 +33,7 @@ Get 	/r/{roomkey}/logs 						Rooms.Logs
 Get     /admin                                  Admin.Index
 Get     /admin/users                            Admin.Users
 Get     /admin/rooms                            Admin.Rooms
+Get     /admin/{roomKey}/changelog              Admin.ChangeLogStatus
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
