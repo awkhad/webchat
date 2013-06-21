@@ -3,3 +3,4 @@ tmp/
 *.swp
 *.swo
 on
+app/routes/routes.go
