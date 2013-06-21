@@ -2,6 +2,7 @@ package chatserver
 
 import (
 	"log"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -19,6 +20,28 @@ func checkCmd(text string) bool {
 	}
 }
 
+func checkPrivateMessage(text string) bool {
+	if text[0] == '@' {
+		return true
+	} else {
+		return false
+	}
+}
+
+func getUsers(text string) (names []string) {
+	re, _ := regexp.Compile("@(\\w+)")
+	result := re.FindAllString(text, -1)
+
+	for _, str := range result {
+		str = strings.Trim(str, "@")
+		names = append(names, str)
+	}
+
+	log.Println(names)
+	return names
+}
+
+// handle message text and return cmd result
 func (u *OnlineUser) cmdResult(text string) string {
 	text = strings.Trim(text, "/")
 	var result string

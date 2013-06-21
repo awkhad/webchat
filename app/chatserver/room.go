@@ -2,7 +2,7 @@ package chatserver
 
 import (
 	"container/list"
-	"fmt"
+	"log"
 	"strconv"
 	"time"
 	"webchat/app/model"
@@ -47,7 +47,7 @@ func (r *ActiveRoom) JoinUser(user *OnlineUser) {
 		Created: time.Now(),
 	}
 
-	fmt.Println("the room len is:", r.Users.Len())
+	log.Println("the room len is:", r.Users.Len())
 
 	r.Broadcast <- event
 }
@@ -101,4 +101,18 @@ func (r *ActiveRoom) AddUserToRecent(user *model.User) {
 	// add user id to room recent user list
 	roomKey := "room:" + r.RoomKey + ":users"
 	redisClient.Sadd(roomKey, []byte(strconv.Itoa(user.Id)))
+}
+
+// get *OnlineUser by user name
+func (r *ActiveRoom) GetUserByName(name string) (onlineUser *OnlineUser) {
+
+	for e := r.Users.Front(); e != nil; e = e.Next() {
+		user := e.Value.(*OnlineUser)
+		if user.Info.Name == name {
+			onlineUser = user
+			break
+		}
+	}
+	log.Println(onlineUser == nil)
+	return onlineUser
 }

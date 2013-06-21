@@ -4,6 +4,7 @@ import (
 	"code.google.com/p/go.net/websocket"
 	"webchat/app/model"
 	//"strconv"
+	//"strings"
 	"log"
 	"time"
 )
@@ -64,7 +65,9 @@ func (u *OnlineUser) PullFromClient() {
 
 func (u *OnlineUser) HandleMessage(event *Event) {
 	if checkCmd(event.Text) {
-		u.ProcessCmd(event.Text)
+		u.ProcessCmd(event)
+	} else if checkPrivateMessage(event.Text) {
+		u.ProcessPrivateMessage(event)
 	} else {
 		if u.Room.Status {
 			u.Room.Broadcast <- event
@@ -75,17 +78,32 @@ func (u *OnlineUser) HandleMessage(event *Event) {
 	}
 }
 
-func (u *OnlineUser) ProcessCmd(Text string) {
-	resultText := u.cmdResult(Text)
-
-	var event *Event = &Event{
-		Type:    "cmd",
-		Text:    resultText,
-		Created: time.Now(),
-		User:    u.Info,
-	}
-
+func (u *OnlineUser) ProcessCmd(event *Event) {
+	resultText := u.cmdResult(event.Text)
+	event.Type, event.Text = "cmd", resultText
 	u.Send <- event
+}
+
+func (u *OnlineUser) ProcessPrivateMessage(event *Event) {
+	users := getUsers(event.Text)
+	originText := event.Text
+
+	for _, name := range users {
+		onlineUser := u.Room.GetUserByName(name)
+		if onlineUser == nil {
+			e := &Event{
+				Type:    "cmd",
+				Text:    "\nuser " + name + " not found",
+				Created: time.Now(),
+				User:    u.Info,
+			}
+
+			u.Send <- e
+		} else {
+			event.Text = "\n private message:" + originText
+			onlineUser.Send <- event
+		}
+	}
 }
 
 func (u *OnlineUser) SaveMessageToRedis(event *Event) {

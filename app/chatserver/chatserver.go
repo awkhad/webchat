@@ -2,8 +2,9 @@ package chatserver
 
 import (
 	"container/list"
-	"fmt"
 	"time"
+	//"errors"
+	"log"
 	"webchat/app/model"
 )
 
@@ -72,7 +73,7 @@ func (s *Server) RunRooms() {
 
 func (s *Server) JoinUser(u *OnlineUser) {
 	s.ActiveUsers.PushBack(u)
-	fmt.Println("the server user list len is:", s.ActiveUsers.Len())
+	log.Println("the server user list len is:", s.ActiveUsers.Len())
 }
 
 func (s *Server) RemoveUser(u *OnlineUser) {
@@ -85,7 +86,7 @@ func (s *Server) RemoveUser(u *OnlineUser) {
 		}
 	}
 
-	fmt.Println("the server user list len is:", s.ActiveUsers.Len())
+	log.Println("the server user list len is:", s.ActiveUsers.Len())
 }
 
 // get *OnlineUser by id

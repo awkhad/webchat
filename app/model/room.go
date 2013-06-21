@@ -202,7 +202,7 @@ func AllMessageFromRedis(roomkey string) (LM []*LatestMessage) {
 }
 
 func (r *Room) LatestMessage() (LM []*LatestMessage) {
-	LM = GetMessageFromRedis(r.RoomKey, 0, 9)
+	LM = GetMessageFromRedis(r.RoomKey, 0, 4)
 	return
 }
 
