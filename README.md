@@ -1,12 +1,13 @@
 # web chat use websocket
 
-# 需要的依赖
+
+### 需要的依赖
 
 	mysql, redis
 	golang, revel
 	beedb mysql的orm
 
-# how to run 
+### how to run 
 
 	# install revel:
 	go get github.com/robfig/revel
@@ -19,11 +20,11 @@
 
 	
 
-# ubuntu 下安装依赖包
+### ubuntu 下安装依赖包
 
 	sudo apt-get install mysql-server
 
-# mysql数据库相关的操作使用rails 的migration
+### mysql数据库相关的操作使用rails 的migration
 
 需要安装ruby, activerecord gem
 	
@@ -39,7 +40,7 @@
 
 
 
-## 使用redis存储数据相关结构
+### 使用redis存储数据相关结构
 
 * save message to list
 
@@ -55,4 +56,11 @@
    key 是: user:id
    value 是: name, avatar, id
 
-    
+
+### rooms list 
+
+![](http://ww1.sinaimg.cn/large/7121be43jw1e93zrwb0z7j20sf0kcabj.jpg)
+
+### chat room 
+
+![](http://ww3.sinaimg.cn/large/7121be43jw1e93zpnrvi4j21g20mx77y.jpg)  
